@@ -443,6 +443,23 @@ function aCount(tid){ return aPicks.filter(p=>p.teamId===tid).length; }
 function aRemaining(tid){ return BUDGET-aSpent(tid); }
 function totalSpent(){ return aPicks.reduce((a,p)=>a+p.cost,0); }
 
+function saveAuction(){
+  localStorage.setItem('fml_auction', JSON.stringify({
+    aFilms, aWriteIns, aPicks, aCurrentId, aNominatedBy, aCurBid
+  }));
+}
+function loadAuction(){
+  const s = localStorage.getItem('fml_auction');
+  if(!s) return;
+  const d = JSON.parse(s);
+  aFilms = d.aFilms || aFilms;
+  aWriteIns = d.aWriteIns || [];
+  aPicks = d.aPicks || [];
+  aCurrentId = d.aCurrentId || null;
+  aNominatedBy = d.aNominatedBy || null;
+  aCurBid = d.aCurBid || null;
+}
+
 // ─── AUCTION RENDER ──────────────────────────────────────
 function renderNomTracker(){
   const idx=nomIdx();
@@ -560,6 +577,7 @@ function resetDraft(){
   const pb=document.getElementById('pause-btn');
   pb.innerHTML='&#9646;&#9646; Pause';pb.style.color='';pb.style.borderColor='';pb.disabled=true;
   renderCurrentBid();renderFilmGrid();renderBudgets();renderLog();renderNomTracker();renderTotalBudget();
+  localStorage.removeItem('fml_auction');
 }
 
 function startTimer(){
@@ -686,6 +704,7 @@ function doAward(filmId,teamId,cost){
   renderLog();
   renderNomTracker();
   renderTotalBudget();
+  saveAuction();
 }
 
 function undoLast(){
@@ -712,6 +731,7 @@ function undoLast(){
   renderLog();
   renderNomTracker();
   renderTotalBudget();
+  saveAuction();
 }
 
 function addWriteIn(){
@@ -722,6 +742,7 @@ function addWriteIn(){
   aWriteIns.push({id:1000+aWriteIns.length+1,title,sold:false});
   inp.value='';
   renderFilmGrid();
+  saveAuction();
 }
 
 // ─── NAV ─────────────────────────────────────────────────
@@ -734,6 +755,21 @@ function show(id,btn){
 }
 
 // ─── INIT ────────────────────────────────────────────────
+loadAuction();
+// Restore UI state if a film was on the clock
+if(aCurrentId){
+  const f=aAllFilms().find(x=>x.id===aCurrentId);
+  if(f) document.getElementById('deck-title').textContent=f.title;
+  document.getElementById('award-btn').disabled=!aCurBid;
+  document.getElementById('pause-btn').disabled=!aCurBid;
+}
+if(aCurBid){
+  const t=TEAMS.find(x=>x.id===aCurBid.teamId);
+  const tn=document.getElementById('cb-team');
+  const ta=document.getElementById('cb-amount');
+  tn.className='cb-team';tn.textContent=t.name;
+  ta.style.display='block';ta.textContent='$'+aCurBid.amount;
+}
 renderBoard();
 renderRosters();
 renderFilmGrid();
@@ -741,6 +777,7 @@ renderBudgets();
 renderLog();
 renderNomTracker();
 renderTotalBudget();
+renderMinBidHint();
 </script>
 </body>
 </html>
