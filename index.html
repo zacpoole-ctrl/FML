@@ -148,6 +148,32 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .le-team{color:#4a9edd;font-size:11px}
 .le-cost{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#f5c400}
 .log-empty{font-size:12px;color:#333;font-style:italic}
+
+/* NOMINATION TRACKER */
+.nom-tracker{background:#1a1a1a;border-left:3px solid #f5c400;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
+.nom-tracker-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.08em;color:#f5c400;margin-bottom:8px}
+.nom-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #2a2a2a}
+.nom-row:last-child{border-bottom:none}
+.nom-team{font-size:12px;font-weight:600;color:#e8e8e8}
+.nom-team.active-nom{color:#f5c400}
+.nom-dots{display:flex;gap:4px}
+.nom-dot{width:10px;height:10px;border-radius:50%;background:#2a2a2a;border:1px solid #3a3a3a}
+.nom-dot.used{background:#cc0000;border-color:#cc0000}
+.nom-dot.active{background:#f5c400;border-color:#f5c400;animation:pulse 0.8s infinite alternate}
+.nom-banner{background:#1a1400;border:2px solid #f5c400;border-radius:6px;padding:6px 12px;margin-bottom:10px;font-size:12px;color:#f5c400;font-weight:600;text-align:center;letter-spacing:0.05em}
+
+/* TOTAL BUDGET BAR */
+.total-budget-bar{background:#1a1a1a;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
+.tb-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.tb-label span:first-child{font-size:11px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase}
+.tb-label span:last-child{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#f5c400}
+.tb-bg{height:6px;background:#2a2a2a;border-radius:3px}
+.tb-fill{height:6px;background:#cc0000;border-radius:3px;transition:width 0.4s}
+.tb-sub{font-size:10px;color:#555;margin-top:4px;text-align:right}
+
+/* MIN BID HINT */
+.min-bid-hint{font-size:11px;color:#888;margin-top:6px;min-height:16px}
+.min-bid-hint span{color:#f5c400;font-weight:700}
 </style>
 </head>
 <body>
@@ -225,6 +251,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
             </div>
 
             <!-- New bid input -->
+            <div id="nom-banner" class="nom-banner" style="display:none"></div>
             <div class="bid-input-row">
               <select id="bid-team">
                 <option value="">— Bidding Team —</option>
@@ -238,12 +265,19 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
               <button class="btn-bid" onclick="placeBid()">Bid</button>
               <button class="btn-award" id="award-btn" onclick="awardNow()" disabled>Award &#10003;</button>
             </div>
+            <div class="min-bid-hint" id="min-bid-hint"></div>
           </div>
         </div>
       </div>
 
       <!-- RIGHT -->
       <div>
+        <div class="nom-tracker" id="nom-tracker"></div>
+        <div class="total-budget-bar">
+          <div class="tb-label"><span>Total Budget Spent</span><span id="tb-amount">$0 / $500</span></div>
+          <div class="tb-bg"><div class="tb-fill" id="tb-fill" style="width:0%"></div></div>
+          <div class="tb-sub" id="tb-sub">0 of 20 picks made</div>
+        </div>
         <div class="ap">
           <div class="ap-title">Budgets</div>
           <div id="budgets"></div>
@@ -385,20 +419,67 @@ function saveFilm(fid){
 // ─── AUCTION STATE ───────────────────────────────────────
 let aFilms = Q2_POOL.map((t,i)=>({id:i+1,title:t,sold:false}));
 let aWriteIns = [];
-let aPicks = [];  // {filmId, filmTitle, teamId, cost}
+let aPicks = [];  // {filmId, filmTitle, teamId, cost, nominatedBy}
 let aHistory = [];
 let aCurrentId = null;
+let aNominatedBy = null; // teamId of nominator for current film
 let aCurBid = null; // {teamId, amount}
 let aTimer = null;
 let aTimerSecs = 0;
 let aPaused = false;
 
+// Nomination order: each team nominates 4 times, rotating
+// Order: AC, BL, DR, JC, ZP repeated 4 times = 20 nominations
+const NOM_ORDER = Array.from({length:MAX_PICKS}, ()=>TEAMS.map(t=>t.id)).flat();
+// NOM_ORDER = [AC,BL,DR,JC,ZP, AC,BL,DR,JC,ZP, AC,BL,DR,JC,ZP, AC,BL,DR,JC,ZP]
+
+function nomIdx(){ return aPicks.length; } // next nomination index
+function currentNominator(){ return NOM_ORDER[nomIdx()]; }
+function nomCount(tid){ return aPicks.filter(p=>p.nominatedBy===tid).length; }
+
 function aAllFilms(){ return [...aFilms,...aWriteIns]; }
 function aSpent(tid){ return aPicks.filter(p=>p.teamId===tid).reduce((a,p)=>a+p.cost,0); }
 function aCount(tid){ return aPicks.filter(p=>p.teamId===tid).length; }
 function aRemaining(tid){ return BUDGET-aSpent(tid); }
+function totalSpent(){ return aPicks.reduce((a,p)=>a+p.cost,0); }
 
 // ─── AUCTION RENDER ──────────────────────────────────────
+function renderNomTracker(){
+  const idx=nomIdx();
+  if(idx>=NOM_ORDER.length){ document.getElementById('nom-tracker').innerHTML='<div class="nom-tracker-title">Draft Complete!</div>'; return; }
+  const activeId=currentNominator();
+  document.getElementById('nom-tracker').innerHTML=
+    '<div class="nom-tracker-title">Nomination Order</div>'
+    +TEAMS.map(t=>{
+      const used=nomCount(t.id);
+      const isActive=t.id===activeId;
+      return '<div class="nom-row"><span class="nom-team'+(isActive?' active-nom':'')+'">'+t.name+(isActive?' &#9654;':'')+'</span>'
+        +'<div class="nom-dots">'+Array.from({length:MAX_PICKS},(_,i)=>'<div class="nom-dot'+(i<used?' used':(isActive&&i===used?' active':''))+'"></div>').join('')+'</div></div>';
+    }).join('');
+  // Banner on on-deck panel
+  const nb=document.getElementById('nom-banner');
+  const nomTeam=TEAMS.find(t=>t.id===activeId);
+  if(aCurrentId===null){
+    nb.style.display='block';
+    nb.textContent=nomTeam.name+' — select your nomination';
+  } else { nb.style.display='none'; }
+}
+
+function renderTotalBudget(){
+  const sp=totalSpent(), total=TEAMS.length*BUDGET, picks=aPicks.length, maxPicks=TEAMS.length*MAX_PICKS;
+  const pct=Math.round(sp/total*100);
+  document.getElementById('tb-amount').textContent='$'+sp+' / $'+total;
+  document.getElementById('tb-fill').style.width=pct+'%';
+  document.getElementById('tb-sub').textContent=picks+' of '+maxPicks+' picks made';
+}
+
+function renderMinBidHint(){
+  const el=document.getElementById('min-bid-hint');
+  if(!aCurrentId){el.textContent='';return;}
+  if(!aCurBid){el.innerHTML='Nomination opens at <span>$1</span>';}
+  else{el.innerHTML='Min next bid: <span>$'+(aCurBid.amount+1)+'</span>';}
+}
+
 function renderFilmGrid(){
   document.getElementById('film-grid').innerHTML=aAllFilms().map(f=>
     '<button class="fbtn'+(f.sold?' sold':'')+(aCurrentId===f.id?' active':'')+'" onclick="selectFilm('+f.id+')">'
@@ -429,7 +510,8 @@ function renderLog(){
   if(!aPicks.length){el.innerHTML='<div class="log-empty">No picks yet</div>';return;}
   el.innerHTML=[...aPicks].reverse().map(p=>{
     const t=TEAMS.find(x=>x.id===p.teamId);
-    return '<div class="log-entry"><div><div class="le-film">'+p.filmTitle+'</div><div class="le-team">'+t.name+'</div></div><div class="le-cost">$'+p.cost+'</div></div>';
+    const nom=p.nominatedBy?TEAMS.find(x=>x.id===p.nominatedBy):null;
+    return '<div class="log-entry"><div><div class="le-film">'+p.filmTitle+'</div><div class="le-team">'+t.name+(nom&&nom.id!==t.id?' <span style="color:#555">(nom: '+nom.short+')</span>':'')+'</div></div><div class="le-cost">$'+p.cost+'</div></div>';
   }).join('');
 }
 
@@ -443,6 +525,7 @@ function renderCurrentBid(){
     tn.className='cb-team';tn.textContent=t.name;
     ta.style.display='block';ta.textContent='$'+aCurBid.amount;
   }
+  renderMinBidHint();
 }
 
 // ─── TIMER ───────────────────────────────────────────────
@@ -468,7 +551,7 @@ function resetDraft(){
   if(!confirm('Reset the entire draft? All picks and bids will be cleared.')) return;
   stopTimer();
   aFilms=Q2_POOL.map((t,i)=>({id:i+1,title:t,sold:false}));
-  aWriteIns=[];aPicks=[];aHistory=[];aCurrentId=null;aCurBid=null;aPaused=false;
+  aWriteIns=[];aPicks=[];aHistory=[];aCurrentId=null;aCurBid=null;aNominatedBy=null;aPaused=false;
   document.getElementById('deck-title').innerHTML='<span class="no-film">Select a film above</span>';
   document.getElementById('bid-team').value='';
   document.getElementById('bid-amount').value='';
@@ -476,7 +559,7 @@ function resetDraft(){
   document.getElementById('undo-btn').disabled=true;
   const pb=document.getElementById('pause-btn');
   pb.innerHTML='&#9646;&#9646; Pause';pb.style.color='';pb.style.borderColor='';pb.disabled=true;
-  renderCurrentBid();renderFilmGrid();renderBudgets();renderLog();
+  renderCurrentBid();renderFilmGrid();renderBudgets();renderLog();renderNomTracker();renderTotalBudget();
 }
 
 function startTimer(){
@@ -523,15 +606,32 @@ function autoAward(){
 function selectFilm(id){
   const f=aAllFilms().find(x=>x.id===id);
   if(!f||f.sold) return;
-  stopTimer();
-  aCurBid=null;
-  aCurrentId=id;
-  document.getElementById('deck-title').textContent=f.title;
-  document.getElementById('bid-team').value='';
-  document.getElementById('bid-amount').value='';
-  document.getElementById('award-btn').disabled=true;
-  renderCurrentBid();
-  renderFilmGrid();
+  // Enforce nomination turn
+  const nomId=currentNominator();
+  if(aNominatedBy===null){ // no film nominated yet this round — check turn
+    if(nomIdx()<NOM_ORDER.length && nomId!==null){
+      // auto-nominate: set film + $1 bid for nominator
+      stopTimer();
+      aCurBid=null;
+      aCurrentId=id;
+      aNominatedBy=nomId;
+      document.getElementById('deck-title').textContent=f.title;
+      document.getElementById('bid-team').value='';
+      document.getElementById('bid-amount').value='';
+      document.getElementById('award-btn').disabled=true;
+      // Auto place $1 nomination bid
+      const t=TEAMS.find(x=>x.id===nomId);
+      aCurBid={teamId:nomId,amount:1};
+      document.getElementById('award-btn').disabled=false;
+      document.getElementById('pause-btn').disabled=false;
+      renderCurrentBid();
+      renderFilmGrid();
+      renderNomTracker();
+      document.getElementById('nom-banner').style.display='none';
+      startTimer();
+      renderBudgets();
+    }
+  }
 }
 
 function placeBid(){
@@ -543,7 +643,8 @@ function placeBid(){
   const t=TEAMS.find(x=>x.id===teamId);
   if(aCount(teamId)>=MAX_PICKS){alert(t.name+' already has 4 picks.');return;}
   if(amount>aRemaining(teamId)){alert(t.name+' only has $'+aRemaining(teamId)+' left.');return;}
-  if(aCurBid&&amount<=aCurBid.amount){alert('Bid must be higher than current bid of $'+aCurBid.amount+'.');return;}
+  const minBid=aCurBid?aCurBid.amount+1:1;
+  if(amount<minBid){alert('Min bid is $'+minBid+'.');return;}
   aCurBid={teamId,amount};
   document.getElementById('bid-team').value='';
   document.getElementById('bid-amount').value='';
@@ -562,8 +663,9 @@ function awardNow(){
 
 function doAward(filmId,teamId,cost){
   const f=aAllFilms().find(x=>x.id===filmId);
-  aHistory.push({picks:JSON.parse(JSON.stringify(aPicks)),films:JSON.parse(JSON.stringify(aFilms)),writeIns:JSON.parse(JSON.stringify(aWriteIns)),currentId:aCurrentId,curBid:aCurBid?{...aCurBid}:null});
-  aPicks.push({filmId,filmTitle:f.title,teamId,cost});
+  aHistory.push({picks:JSON.parse(JSON.stringify(aPicks)),films:JSON.parse(JSON.stringify(aFilms)),writeIns:JSON.parse(JSON.stringify(aWriteIns)),currentId:aCurrentId,curBid:aCurBid?{...aCurBid}:null,nominatedBy:aNominatedBy});
+  aPicks.push({filmId,filmTitle:f.title,teamId,cost,nominatedBy:aNominatedBy});
+  aNominatedBy=null;
   const src=aFilms.find(x=>x.id===filmId);
   if(src) src.sold=true;
   else { const wi=aWriteIns.find(x=>x.id===filmId); if(wi) wi.sold=true; }
@@ -582,6 +684,8 @@ function doAward(filmId,teamId,cost){
   renderFilmGrid();
   renderBudgets();
   renderLog();
+  renderNomTracker();
+  renderTotalBudget();
 }
 
 function undoLast(){
@@ -593,6 +697,7 @@ function undoLast(){
   aWriteIns=prev.writeIns;
   aCurrentId=prev.currentId;
   aCurBid=prev.curBid;
+  aNominatedBy=prev.nominatedBy||null;
   if(aCurrentId){
     const f=aAllFilms().find(x=>x.id===aCurrentId);
     document.getElementById('deck-title').textContent=f?f.title:'';
@@ -605,6 +710,8 @@ function undoLast(){
   renderFilmGrid();
   renderBudgets();
   renderLog();
+  renderNomTracker();
+  renderTotalBudget();
 }
 
 function addWriteIn(){
@@ -632,6 +739,8 @@ renderRosters();
 renderFilmGrid();
 renderBudgets();
 renderLog();
+renderNomTracker();
+renderTotalBudget();
 </script>
 </body>
 </html>
