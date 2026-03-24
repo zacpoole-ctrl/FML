@@ -3,111 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FML — Fantasy Movie League</title>
+<title>FML 2026</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e8e8e8;min-height:100vh}
-.header{background:#0a0a0f;border-bottom:1px solid #1e1e2e;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.logo{font-size:22px;font-weight:700;letter-spacing:0.2em;color:#fff}.logo span{color:#e5b800}
-.subtitle{font-size:11px;color:#666;letter-spacing:0.1em;margin-top:2px}
+.header{background:#0a0a0f;border-bottom:1px solid #1e1e2e;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.logo{font-size:20px;font-weight:700;letter-spacing:0.2em;color:#fff}.logo span{color:#e5b800}
+.sub{font-size:11px;color:#555;margin-top:2px}
 .nav{display:flex;gap:4px}
-.nav button{background:transparent;border:none;color:#888;font-size:13px;padding:6px 14px;border-radius:6px;cursor:pointer}
+.nav button{background:transparent;border:none;color:#666;font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer}
 .nav button.active{color:#fff;background:#1e1e3a;font-weight:500}
-.container{max-width:880px;margin:0 auto;padding:1.5rem}
-.section{display:none}.section.active{display:block}
-.tier-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#555;padding:1.25rem 0 0.5rem;border-top:1px solid #1e1e2e;margin-top:0.75rem}
-.tier-label:first-child{border-top:none;padding-top:0}
-.film-row{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:12px;padding:0.75rem 1rem;background:#111118;border:1px solid #1e1e2e;border-radius:10px;margin-bottom:6px}
-.film-name{font-size:14px;font-weight:500;color:#e8e8e8}.film-meta{font-size:11px;color:#555;margin-top:2px}
-.oscar-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px}
-.oscar-a{background:#2a1f00;color:#e5b800}.oscar-b{background:#0f1f2a;color:#4a9edd}.oscar-c{background:#1a1a1a;color:#666}
-.gross{font-size:11px;color:#555;text-align:right;white-space:nowrap}
-.value{font-size:16px;font-weight:700;color:#e5b800;min-width:32px;text-align:right}
-.standings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem}
-.standing-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1.25rem;text-align:center}
-.standing-name{font-size:14px;font-weight:600;color:#e8e8e8}.standing-pts{font-size:28px;font-weight:700;color:#e5b800;margin:6px 0 2px}
-.standing-label{font-size:10px;color:#555}.standing-budget{font-size:11px;color:#4a9edd;margin-top:4px}
-.draft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
-.draft-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1rem}
-.draft-player{font-size:12px;font-weight:600;color:#888;letter-spacing:0.08em;margin-bottom:10px;text-transform:uppercase}
-.draft-pick{background:#0d0d15;border:1px solid #1e1e2e;border-radius:7px;padding:8px 10px;margin-bottom:6px}
-.draft-pick-title{font-size:12px;font-weight:500;color:#e8e8e8}.draft-pick-price{font-size:11px;color:#e5b800;margin-top:2px}
-.draft-empty{font-size:11px;color:#333;font-style:italic;padding:4px 0}
-.rules-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1rem 1.25rem;margin-bottom:10px}
-.rules-card h3{font-size:13px;font-weight:600;color:#e5b800;margin-bottom:6px}
-.rules-card p{font-size:13px;color:#888;line-height:1.7}
-.page-title{font-size:11px;font-weight:600;color:#555;margin-bottom:1rem;letter-spacing:0.1em;text-transform:uppercase}
+.wrap{max-width:960px;margin:0 auto;padding:1.25rem}
+.sec{display:none}.sec.on{display:block}
+.sb-row{display:grid;grid-template-columns:32px 1fr 100px 100px 80px;gap:8px;align-items:center;padding:0.75rem 1rem;background:#111118;border:1px solid #1e1e2e;border-radius:10px;margin-bottom:6px}
+.sb-row.head{background:transparent;border-color:transparent;padding-bottom:2px}
+.sb-row.head span{font-size:10px;font-weight:600;color:#555;letter-spacing:0.08em;text-transform:uppercase}
+.rank{font-size:18px;font-weight:700;color:#333}
+.rank.r1{color:#e5b800}.rank.r2{color:#aaa}.rank.r3{color:#cd7f32}
+.team-name{font-size:14px;font-weight:600;color:#e8e8e8}
+.team-owner{font-size:11px;color:#555;margin-top:1px}
+.score{font-size:16px;font-weight:700;color:#e5b800;text-align:right}
+.ppd{font-size:13px;color:#4a9edd;text-align:right}
+.budget{font-size:12px;color:#555;text-align:right}
+.team-block{background:#111118;border:1px solid #1e1e2e;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.team-header{padding:0.875rem 1rem;background:#0d0d18;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e2e}
+.team-header h3{font-size:14px;font-weight:600;color:#e8e8e8}
+.team-header .tpts{font-size:14px;font-weight:700;color:#e5b800}
+.film-table{width:100%;border-collapse:collapse}
+.film-table th{font-size:10px;font-weight:600;color:#555;letter-spacing:0.08em;text-transform:uppercase;padding:6px 12px;text-align:left;border-bottom:1px solid #1e1e2e}
+.film-table th.r{text-align:right}
+.film-table td{font-size:13px;color:#e8e8e8;padding:8px 12px;border-bottom:1px solid #0d0d18}
+.film-table td.r{text-align:right;color:#888}
+.film-table td.fpts{text-align:right;font-weight:600;color:#e5b800}
+.film-table td.fppd{text-align:right;color:#4a9edd}
+.film-table tr:last-child td{border-bottom:none}
+.film-table tr.frow{cursor:pointer}
+.film-table tr.frow:hover{background:#0d0d18}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#111118;border:1px solid #2e2e4e;border-radius:14px;padding:1.5rem;width:90%;max-width:580px;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:17px;font-weight:600;color:#e8e8e8;margin-bottom:4px}
+.mclose{float:right;background:transparent;border:none;color:#666;font-size:20px;cursor:pointer;margin-top:-4px;line-height:1}
+.cat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1a1a2a}
+.cat-row:last-child{border-bottom:none}
+.cat-name{font-size:13px;color:#888}
+.cat-raw{font-size:11px;color:#444}
+.cat-pts{font-size:13px;font-weight:600;color:#e5b800}
+.total-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.875rem;border-top:1px solid #2e2e4e}
+.total-row span:first-child{font-size:14px;font-weight:600;color:#e8e8e8}
+.total-row span:last-child{font-size:22px;font-weight:700;color:#e5b800}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.acard{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1rem}
+.acard h3{font-size:12px;font-weight:600;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
+.acard .asub{font-size:11px;color:#444;margin-bottom:10px}
+.fr{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.fr label{font-size:12px;color:#555;width:95px;flex-shrink:0}
+.fr input{background:#0a0a0f;border:1px solid #2e2e4e;border-radius:5px;color:#e8e8e8;font-size:13px;padding:3px 7px;width:75px}
+.sbtn{margin-top:10px;background:#1a1a3a;border:1px solid #3e3e6e;border-radius:6px;color:#e8e8e8;font-size:12px;padding:6px 14px;cursor:pointer;width:100%}
+.sbtn:hover{background:#2a2a5a}
+.notice{font-size:12px;color:#4a9e4a;margin-top:6px;display:none;text-align:center}
 </style>
 </head>
 <body>
 <div class="header">
-  <div><div class="logo">F<span>M</span>L</div><div class="subtitle">Fantasy Movie League &bull; Q2 2026</div></div>
+  <div><div class="logo">F<span>M</span>L</div><div class="sub">Fantasy Movie League &bull; 2026</div></div>
   <nav class="nav">
-    <button class="active" onclick="show('films',this)">Films</button>
-    <button onclick="show('standings',this)">Standings</button>
-    <button onclick="show('draft',this)">Draft</button>
-    <button onclick="show('rules',this)">Rules</button>
+    <button class="active" onclick="show('board',this)">Scoreboard</button>
+    <button onclick="show('rosters',this)">Rosters</button>
+    <button onclick="show('admin',this)">Admin</button>
   </nav>
 </div>
-<div class="container">
-  <div id="films" class="section active">
-    <div class="tier-label">Tier 1 — must-haves</div>
-    <div class="film-row"><div><div class="film-name">Super Mario Galaxy Movie</div><div class="film-meta">Apr 1 &bull; Universal/Illumination</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$1.2–1.5B proj</div><div class="value">$30</div></div>
-    <div class="film-row"><div><div class="film-name">Toy Story 5</div><div class="film-meta">Jun 19 &bull; Disney/Pixar</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$950M–1.1B proj</div><div class="value">$28</div></div>
-    <div class="film-row"><div><div class="film-name">The Mandalorian &amp; Grogu</div><div class="film-meta">May 22 &bull; Disney/Lucasfilm</div></div><span class="oscar-badge oscar-c">Oscar C</span><div class="gross">$500M–900M proj</div><div class="value">$25</div></div>
-    <div class="tier-label">Tier 2 — strong value</div>
-    <div class="film-row"><div><div class="film-name">The Devil Wears Prada 2</div><div class="film-meta">May 1 &bull; 20th Century Studios</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$300M–600M proj</div><div class="value">$22</div></div>
-    <div class="film-row"><div><div class="film-name">Disclosure Day</div><div class="film-meta">Jun 12 &bull; Universal/Amblin</div></div><span class="oscar-badge oscar-a">Oscar A</span><div class="gross">$350M–550M proj</div><div class="value">$20</div></div>
-    <div class="film-row"><div><div class="film-name">Michael</div><div class="film-meta">Apr 24 &bull; Lionsgate</div></div><span class="oscar-badge oscar-a">Oscar A</span><div class="gross">$650M–900M proj</div><div class="value">$16</div></div>
-    <div class="tier-label">Tier 3 — mid-range</div>
-    <div class="film-row"><div><div class="film-name">Scary Movie 6</div><div class="film-meta">Jun &bull; Paramount</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Moderate</div><div class="value">$12</div></div>
-    <div class="film-row"><div><div class="film-name">Supergirl</div><div class="film-meta">Jun 26 &bull; Warner Bros/DC</div></div><span class="oscar-badge oscar-c">Oscar C</span><div class="gross">$400M–545M proj</div><div class="value">$11</div></div>
-    <div class="film-row"><div><div class="film-name">Jackass 5</div><div class="film-meta">Jun &bull; Paramount</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Moderate</div><div class="value">$9</div></div>
-    <div class="film-row"><div><div class="film-name">The Mummy</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Unknown</div><div class="value">$8</div></div>
-    <div class="film-row"><div><div class="film-name">Backrooms</div><div class="film-meta">May &bull; Horror</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Limited</div><div class="value">$8</div></div>
-    <div class="tier-label">Tier 4 — dart throws</div>
-    <div class="film-row"><div><div class="film-name">Obsession</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$5</div></div>
-    <div class="film-row"><div><div class="film-name">In the Grey</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$5</div></div>
-    <div class="film-row"><div><div class="film-name">The Sheep Detectives</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$4</div></div>
-    <div class="film-row"><div><div class="film-name">Mother Mary</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$4</div></div>
-    <div class="film-row"><div><div class="film-name">You, Me, and Tuscany</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
-    <div class="film-row"><div><div class="film-name">Over Your Dead Body</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
-    <div class="film-row"><div><div class="film-name">I Love Boosters</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
-    <div class="film-row"><div><div class="film-name">Passengers</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$2</div></div>
-    <div class="film-row"><div><div class="film-name">The Drama</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$2</div></div>
-    <div class="film-row"><div><div class="film-name">Erupcja</div><div class="film-meta">TBD &bull; International</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$1</div></div>
+<div class="wrap">
+  <div id="board" class="sec on">
+    <div class="sb-row head"><span></span><span>Team</span><span style="text-align:right">Score</span><span style="text-align:right">PPD Avg</span><span style="text-align:right">Budget</span></div>
+    <div id="sb-list"></div>
   </div>
-  <div id="standings" class="section">
-    <div class="page-title">Current Standings</div>
-    <div class="standings-grid">
-      <div class="standing-card"><div class="standing-name">Aliyah</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
-      <div class="standing-card"><div class="standing-name">Crews</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
-      <div class="standing-card"><div class="standing-name">Davis</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
-      <div class="standing-card"><div class="standing-name">Zac</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
-      <div class="standing-card"><div class="standing-name">Braden</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
-    </div>
-    <p style="font-size:12px;color:#444;">Standings update after the draft and as films release.</p>
-  </div>
-  <div id="draft" class="section">
-    <div class="page-title">Draft Board — Q2 2026</div>
-    <div class="draft-grid">
-      <div class="draft-card"><div class="draft-player">Aliyah</div><div class="draft-empty">No picks yet</div></div>
-      <div class="draft-card"><div class="draft-player">Crews</div><div class="draft-empty">No picks yet</div></div>
-      <div class="draft-card"><div class="draft-player">Davis</div><div class="draft-empty">No picks yet</div></div>
-      <div class="draft-card"><div class="draft-player">Zac</div><div class="draft-empty">No picks yet</div></div>
-      <div class="draft-card"><div class="draft-player">Braden</div><div class="draft-empty">No picks yet</div></div>
-    </div>
-  </div>
-  <div id="rules" class="section">
-    <div class="page-title">How It Works</div>
-    <div class="rules-card"><h3>Format</h3><p>5 players, 4 picks each, $100 auction budget per team. Highest bid wins each film.</p></div>
-    <div class="rules-card"><h3>Scoring</h3><p>Four categories: box office gross, Letterboxd score, Rotten Tomatoes critic score, and awards. Combined into a final point total at end of quarter.</p></div>
-    <div class="rules-card"><h3>Quarter</h3><p>Q2 2026 covers April, May, and June 2026 releases. Scores lock at end of June.</p></div>
-    <div class="rules-card"><h3>Winner</h3><p>Highest combined score across all four picks wins the pot.</p></div>
+  <div id="rosters" class="sec"><div id="roster-list"></div></div>
+  <div id="admin" class="sec"><div class="admin-grid" id="admin-grid"></div></div>
+</div>
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="mclose" onclick="closeModal()">&#x2715;</button>
+    <h2 id="m-title"></h2>
+    <div id="m-sub" style="font-size:12px;color:#555;margin-bottom:1.25rem"></div>
+    <div id="m-cats"></div>
+    <div class="total-row"><span>Total Points</span><span id="m-total"></span></div>
   </div>
 </div>
 <script>
-function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+const TEAMS=[
+  {id:'AC',name:'The Final Cut',owner:'AC',budget:81},
+  {id:'BL',name:'Complex Productions',owner:'BL',budget:76},
+  {id:'DR',name:'Fuck David Zaslav Pictures',owner:'DR',budget:100},
+  {id:'JC',name:'Studio Six Productions',owner:'JC',budget:75},
+  {id:'ZP',name:'Box Office Bandits',owner:'ZP',budget:63}
+];
+const DEF=[
+  {id:1,team:'AC',title:'Wuthering Heights',cost:40,bo:234.404,lbd:3.9,mc:77,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:2,team:'AC',title:'28 Years Later: The Bone Temple',cost:35,bo:57.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:3,team:'AC',title:'Return to Silent Hill',cost:5,bo:43.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:4,team:'AC',title:'We Bury the Dead',cost:1,bo:3.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:5,team:'BL',title:'Dracula',cost:38,bo:42.3,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:6,team:'BL',title:'Ready or Not 2',cost:30,bo:11.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:7,team:'BL',title:'How to Make a Killing',cost:3,bo:11.5,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:8,team:'BL',title:'Peaky Blinders: The Immortal Man',cost:5,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:9,team:'DR',title:'Hoppers',cost:50,bo:242.6,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:10,team:'DR',title:'GOAT',cost:14,bo:174.5,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:11,team:'DR',title:'Send Help',cost:31,bo:93.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:12,team:'DR',title:'The Breadwinner',cost:5,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:13,team:'JC',title:'Project Hail Mary',cost:72,bo:141.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:14,team:'JC',title:'Reminders of Him',cost:1,bo:54.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:15,team:'JC',title:'I Can Only Imagine 2',cost:1,bo:18.4,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:16,team:'JC',title:'Psycho Killer',cost:1,bo:2.6,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:17,team:'ZP',title:'Scream 7',cost:36,bo:193.8,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:18,team:'ZP',title:'Mercy',cost:11,bo:54.3,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:19,team:'ZP',title:'The Bride!',cost:12,bo:23.2,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:20,team:'ZP',title:'Redux Redux',cost:4,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0}
+];
+function lf(){const s=localStorage.getItem('fml2');return s?JSON.parse(s):DEF;}
+function sf(d){localStorage.setItem('fml2',JSON.stringify(d));}
+function sc(f){
+  const bo=f.bo,lbd=(f.lbd||0)*3,mc=(f.mc||0)*0.15;
+  const osc=(f.oscN||0)+(f.oscW||0)*4,gg=(f.ggN||0)+(f.ggW||0)*2,cc=(f.ccN||0)+(f.ccW||0)*2;
+  const sag=(f.sagN||0)+(f.sagW||0)*2,dga=(f.dgaN||0)+(f.dgaW||0)*2,bafta=(f.baftaN||0)+(f.baftaW||0)*2;
+  const wga=(f.wgaN||0)+(f.wgaW||0)*2,pga=(f.pgaN||0)+(f.pgaW||0)*2;
+  const total=bo+lbd+mc+osc+gg+cc+sag+dga+bafta+wga+pga;
+  return{bo,lbd,mc,osc,gg,cc,sag,dga,bafta,wga,pga,total};
+}
+function ts(films,tid){
+  const tf=films.filter(f=>f.team===tid);
+  const scored=tf.map(f=>({f,s:sc(f)}));
+  const total=scored.reduce((a,x)=>a+x.s.total,0);
+  const ppdAvg=scored.reduce((a,x)=>a+(x.f.cost>0?x.s.total/x.f.cost:0),0)/scored.length;
+  return{total,ppdAvg,scored};
+}
+function renderBoard(){
+  const films=lf();
+  const teams=TEAMS.map(t=>({...t,...ts(films,t.id)})).sort((a,b)=>b.total-a.total);
+  const rc=['r1','r2','r3','',''];
+  document.getElementById('sb-list').innerHTML=teams.map((t,i)=>
+    '<div class="sb-row"><div class="rank '+rc[i]+'">'+(i+1)+'</div><div><div class="team-name">'+t.name+'</div><div class="team-owner">'+t.owner+'</div></div><div class="score">'+t.total.toFixed(2)+'</div><div class="ppd">'+t.ppdAvg.toFixed(2)+'</div><div class="budget">'+t.budget+'</div></div>'
+  ).join('');
+}
+function renderRosters(){
+  const films=lf();
+  document.getElementById('roster-list').innerHTML=TEAMS.map(t=>{
+    const{total,scored}=ts(films,t.id);
+    const rows=scored.map(({f,s})=>
+      '<tr class="frow" onclick="openModal('+f.id+')"><td>'+f.title+'</td><td class="r">'+f.cost+'</td><td class="r">'+f.bo.toFixed(1)+'</td><td class="fpts">'+s.total.toFixed(2)+'</td><td class="fppd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'&#x2014;')+'</td></tr>'
+    ).join('');
+    return '<div class="team-block"><div class="team-header"><h3>'+t.name+' <span style="font-weight:400;color:#555;font-size:12px">('+t.owner+')</span></h3><span class="tpts">'+total.toFixed(2)+' pts</span></div><table class="film-table"><tr><th>Film</th><th class="r">Cost</th><th class="r">B.O. ($M)</th><th class="r">Pts</th><th class="r">PPD</th></tr>'+rows+'</table></div>';
+  }).join('');
+}
+function openModal(fid){
+  const f=lf().find(x=>x.id===fid),s=sc(f),t=TEAMS.find(x=>x.id===f.team);
+  document.getElementById('m-title').textContent=f.title;
+  document.getElementById('m-sub').textContent=t.name+' \u2014 Cost: '+f.cost;
+  const cats=[['Box Office','$'+f.bo+'M',s.bo],['Letterboxd',''+f.lbd,s.lbd],['MetaCritic',''+f.mc,s.mc],['Oscars',f.oscN+'N/'+f.oscW+'W',s.osc],['Golden Globes',f.ggN+'N/'+f.ggW+'W',s.gg],['Critics Choice',f.ccN+'N/'+f.ccW+'W',s.cc],['SAG',f.sagN+'N/'+f.sagW+'W',s.sag],['DGA',f.dgaN+'N/'+f.dgaW+'W',s.dga],['BAFTA',f.baftaN+'N/'+f.baftaW+'W',s.bafta],['WGA',f.wgaN+'N/'+f.wgaW+'W',s.wga],['PGA',f.pgaN+'N/'+f.pgaW+'W',s.pga]];
+  document.getElementById('m-cats').innerHTML=cats.map(([n,r,p])=>'<div class="cat-row"><span class="cat-name">'+n+' <span class="cat-raw">('+r+')</span></span><span class="cat-pts">'+p.toFixed(2)+'</span></div>').join('');
+  document.getElementById('m-total').textContent=s.total.toFixed(2);
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
+function renderAdmin(){
+  const films=lf();
+  document.getElementById('admin-grid').innerHTML=films.map(f=>{
+    const t=TEAMS.find(x=>x.id===f.team);
+    const fields=[['bo','Box Office ($M)','0.001'],['lbd','Letterboxd','0.1'],['mc','MetaCritic','1'],['oscN','Oscar Noms','1'],['oscW','Oscar Wins','1'],['ggN','GG Noms','1'],['ggW','GG Wins','1'],['ccN','CC Noms','1'],['ccW','CC Wins','1'],['sagN','SAG Noms','1'],['sagW','SAG Wins','1'],['dgaN','DGA Noms','1'],['dgaW','DGA Wins','1'],['baftaN','BAFTA Noms','1'],['baftaW','BAFTA Wins','1'],['wgaN','WGA Noms','1'],['wgaW','WGA Wins','1'],['pgaN','PGA Noms','1'],['pgaW','PGA Wins','1']];
+    return '<div class="acard"><h3>'+f.title+'</h3><div class="asub">'+t.name+' &bull; Cost: '+f.cost+'</div>'+fields.map(([k,lbl,step])=>'<div class="fr"><label>'+lbl+'</label><input type="number" step="'+step+'" value="'+(f[k]||0)+'" data-id="'+f.id+'" data-field="'+k+'"></div>').join('')+'<button class="sbtn" onclick="saveFilm('+f.id+')">Save</button><div class="notice" id="saved-'+f.id+'">Saved!</div></div>';
+  }).join('');
+}
+function saveFilm(fid){
+  const films=lf(),f=films.find(x=>x.id===fid);
+  document.querySelectorAll('[data-id="'+fid+'"]').forEach(inp=>{f[inp.dataset.field]=parseFloat(inp.value)||0;});
+  sf(films);renderBoard();renderRosters();
+  const n=document.getElementById('saved-'+fid);n.style.display='block';setTimeout(()=>n.style.display='none',2000);
+}
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('on');btn.classList.add('active');
+  if(id==='admin')renderAdmin();
+}
+renderBoard();renderRosters();
 </script>
 </body>
-  </html>
+</html>
