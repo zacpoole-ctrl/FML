@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FML — Fantasy Movie League</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e8e8e8;min-height:100vh}
+.header{background:#0a0a0f;border-bottom:1px solid #1e1e2e;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.logo{font-size:22px;font-weight:700;letter-spacing:0.2em;color:#fff}.logo span{color:#e5b800}
+.subtitle{font-size:11px;color:#666;letter-spacing:0.1em;margin-top:2px}
+.nav{display:flex;gap:4px}
+.nav button{background:transparent;border:none;color:#888;font-size:13px;padding:6px 14px;border-radius:6px;cursor:pointer}
+.nav button.active{color:#fff;background:#1e1e3a;font-weight:500}
+.container{max-width:880px;margin:0 auto;padding:1.5rem}
+.section{display:none}.section.active{display:block}
+.tier-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#555;padding:1.25rem 0 0.5rem;border-top:1px solid #1e1e2e;margin-top:0.75rem}
+.tier-label:first-child{border-top:none;padding-top:0}
+.film-row{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:12px;padding:0.75rem 1rem;background:#111118;border:1px solid #1e1e2e;border-radius:10px;margin-bottom:6px}
+.film-name{font-size:14px;font-weight:500;color:#e8e8e8}.film-meta{font-size:11px;color:#555;margin-top:2px}
+.oscar-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px}
+.oscar-a{background:#2a1f00;color:#e5b800}.oscar-b{background:#0f1f2a;color:#4a9edd}.oscar-c{background:#1a1a1a;color:#666}
+.gross{font-size:11px;color:#555;text-align:right;white-space:nowrap}
+.value{font-size:16px;font-weight:700;color:#e5b800;min-width:32px;text-align:right}
+.standings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem}
+.standing-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1.25rem;text-align:center}
+.standing-name{font-size:14px;font-weight:600;color:#e8e8e8}.standing-pts{font-size:28px;font-weight:700;color:#e5b800;margin:6px 0 2px}
+.standing-label{font-size:10px;color:#555}.standing-budget{font-size:11px;color:#4a9edd;margin-top:4px}
+.draft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.draft-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1rem}
+.draft-player{font-size:12px;font-weight:600;color:#888;letter-spacing:0.08em;margin-bottom:10px;text-transform:uppercase}
+.draft-pick{background:#0d0d15;border:1px solid #1e1e2e;border-radius:7px;padding:8px 10px;margin-bottom:6px}
+.draft-pick-title{font-size:12px;font-weight:500;color:#e8e8e8}.draft-pick-price{font-size:11px;color:#e5b800;margin-top:2px}
+.draft-empty{font-size:11px;color:#333;font-style:italic;padding:4px 0}
+.rules-card{background:#111118;border:1px solid #1e1e2e;border-radius:10px;padding:1rem 1.25rem;margin-bottom:10px}
+.rules-card h3{font-size:13px;font-weight:600;color:#e5b800;margin-bottom:6px}
+.rules-card p{font-size:13px;color:#888;line-height:1.7}
+.page-title{font-size:11px;font-weight:600;color:#555;margin-bottom:1rem;letter-spacing:0.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><div class="logo">F<span>M</span>L</div><div class="subtitle">Fantasy Movie League &bull; Q2 2026</div></div>
+  <nav class="nav">
+    <button class="active" onclick="show('films',this)">Films</button>
+    <button onclick="show('standings',this)">Standings</button>
+    <button onclick="show('draft',this)">Draft</button>
+    <button onclick="show('rules',this)">Rules</button>
+  </nav>
+</div>
+<div class="container">
+  <div id="films" class="section active">
+    <div class="tier-label">Tier 1 — must-haves</div>
+    <div class="film-row"><div><div class="film-name">Super Mario Galaxy Movie</div><div class="film-meta">Apr 1 &bull; Universal/Illumination</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$1.2–1.5B proj</div><div class="value">$30</div></div>
+    <div class="film-row"><div><div class="film-name">Toy Story 5</div><div class="film-meta">Jun 19 &bull; Disney/Pixar</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$950M–1.1B proj</div><div class="value">$28</div></div>
+    <div class="film-row"><div><div class="film-name">The Mandalorian &amp; Grogu</div><div class="film-meta">May 22 &bull; Disney/Lucasfilm</div></div><span class="oscar-badge oscar-c">Oscar C</span><div class="gross">$500M–900M proj</div><div class="value">$25</div></div>
+    <div class="tier-label">Tier 2 — strong value</div>
+    <div class="film-row"><div><div class="film-name">The Devil Wears Prada 2</div><div class="film-meta">May 1 &bull; 20th Century Studios</div></div><span class="oscar-badge oscar-b">Oscar B</span><div class="gross">$300M–600M proj</div><div class="value">$22</div></div>
+    <div class="film-row"><div><div class="film-name">Disclosure Day</div><div class="film-meta">Jun 12 &bull; Universal/Amblin</div></div><span class="oscar-badge oscar-a">Oscar A</span><div class="gross">$350M–550M proj</div><div class="value">$20</div></div>
+    <div class="film-row"><div><div class="film-name">Michael</div><div class="film-meta">Apr 24 &bull; Lionsgate</div></div><span class="oscar-badge oscar-a">Oscar A</span><div class="gross">$650M–900M proj</div><div class="value">$16</div></div>
+    <div class="tier-label">Tier 3 — mid-range</div>
+    <div class="film-row"><div><div class="film-name">Scary Movie 6</div><div class="film-meta">Jun &bull; Paramount</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Moderate</div><div class="value">$12</div></div>
+    <div class="film-row"><div><div class="film-name">Supergirl</div><div class="film-meta">Jun 26 &bull; Warner Bros/DC</div></div><span class="oscar-badge oscar-c">Oscar C</span><div class="gross">$400M–545M proj</div><div class="value">$11</div></div>
+    <div class="film-row"><div><div class="film-name">Jackass 5</div><div class="film-meta">Jun &bull; Paramount</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Moderate</div><div class="value">$9</div></div>
+    <div class="film-row"><div><div class="film-name">The Mummy</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Unknown</div><div class="value">$8</div></div>
+    <div class="film-row"><div><div class="film-name">Backrooms</div><div class="film-meta">May &bull; Horror</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">Limited</div><div class="value">$8</div></div>
+    <div class="tier-label">Tier 4 — dart throws</div>
+    <div class="film-row"><div><div class="film-name">Obsession</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$5</div></div>
+    <div class="film-row"><div><div class="film-name">In the Grey</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$5</div></div>
+    <div class="film-row"><div><div class="film-name">The Sheep Detectives</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$4</div></div>
+    <div class="film-row"><div><div class="film-name">Mother Mary</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$4</div></div>
+    <div class="film-row"><div><div class="film-name">You, Me, and Tuscany</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
+    <div class="film-row"><div><div class="film-name">Over Your Dead Body</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
+    <div class="film-row"><div><div class="film-name">I Love Boosters</div><div class="film-meta">May</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$3</div></div>
+    <div class="film-row"><div><div class="film-name">Passengers</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$2</div></div>
+    <div class="film-row"><div><div class="film-name">The Drama</div><div class="film-meta">TBD</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$2</div></div>
+    <div class="film-row"><div><div class="film-name">Erupcja</div><div class="film-meta">TBD &bull; International</div></div><span class="oscar-badge oscar-c">Oscar —</span><div class="gross">—</div><div class="value">$1</div></div>
+  </div>
+  <div id="standings" class="section">
+    <div class="page-title">Current Standings</div>
+    <div class="standings-grid">
+      <div class="standing-card"><div class="standing-name">Aliyah</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
+      <div class="standing-card"><div class="standing-name">Crews</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
+      <div class="standing-card"><div class="standing-name">Davis</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
+      <div class="standing-card"><div class="standing-name">Zac</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
+      <div class="standing-card"><div class="standing-name">Braden</div><div class="standing-pts">—</div><div class="standing-label">points</div><div class="standing-budget">$100 budget</div></div>
+    </div>
+    <p style="font-size:12px;color:#444;">Standings update after the draft and as films release.</p>
+  </div>
+  <div id="draft" class="section">
+    <div class="page-title">Draft Board — Q2 2026</div>
+    <div class="draft-grid">
+      <div class="draft-card"><div class="draft-player">Aliyah</div><div class="draft-empty">No picks yet</div></div>
+      <div class="draft-card"><div class="draft-player">Crews</div><div class="draft-empty">No picks yet</div></div>
+      <div class="draft-card"><div class="draft-player">Davis</div><div class="draft-empty">No picks yet</div></div>
+      <div class="draft-card"><div class="draft-player">Zac</div><div class="draft-empty">No picks yet</div></div>
+      <div class="draft-card"><div class="draft-player">Braden</div><div class="draft-empty">No picks yet</div></div>
+    </div>
+  </div>
+  <div id="rules" class="section">
+    <div class="page-title">How It Works</div>
+    <div class="rules-card"><h3>Format</h3><p>5 players, 4 picks each, $100 auction budget per team. Highest bid wins each film.</p></div>
+    <div class="rules-card"><h3>Scoring</h3><p>Four categories: box office gross, Letterboxd score, Rotten Tomatoes critic score, and awards. Combined into a final point total at end of quarter.</p></div>
+    <div class="rules-card"><h3>Quarter</h3><p>Q2 2026 covers April, May, and June 2026 releases. Scores lock at end of June.</p></div>
+    <div class="rules-card"><h3>Winner</h3><p>Highest combined score across all four picks wins the pot.</p></div>
+  </div>
+</div>
+<script>
+function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+</script>
+</body>
+  </html>
