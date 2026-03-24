@@ -15,7 +15,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav button.active{color:#fff;background:#1e1e3a;font-weight:500}
 .wrap{max-width:960px;margin:0 auto;padding:1.25rem}
 .sec{display:none}.sec.on{display:block}
-.sb-row{display:grid;grid-template-columns:32px 1fr 100px 100px 80px;gap:8px;align-items:center;padding:0.75rem 1rem;background:#111118;border:1px solid #1e1e2e;border-radius:10px;margin-bottom:6px}
+.sb-row{display:grid;grid-template-columns:32px 1fr 110px 110px;gap:8px;align-items:center;padding:0.75rem 1rem;background:#111118;border:1px solid #1e1e2e;border-radius:10px;margin-bottom:6px}
 .sb-row.head{background:transparent;border-color:transparent;padding-bottom:2px}
 .sb-row.head span{font-size:10px;font-weight:600;color:#555;letter-spacing:0.08em;text-transform:uppercase}
 .rank{font-size:18px;font-weight:700;color:#333}
@@ -24,7 +24,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .team-owner{font-size:11px;color:#555;margin-top:1px}
 .score{font-size:16px;font-weight:700;color:#e5b800;text-align:right}
 .ppd{font-size:13px;color:#4a9edd;text-align:right}
-.budget{font-size:12px;color:#555;text-align:right}
 .team-block{background:#111118;border:1px solid #1e1e2e;border-radius:12px;margin-bottom:12px;overflow:hidden}
 .team-header{padding:0.875rem 1rem;background:#0d0d18;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e2e}
 .team-header h3{font-size:14px;font-weight:600;color:#e8e8e8}
@@ -75,7 +74,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <div class="wrap">
   <div id="board" class="sec on">
-    <div class="sb-row head"><span></span><span>Team</span><span style="text-align:right">Score</span><span style="text-align:right">PPD Avg</span><span style="text-align:right">Budget</span></div>
+    <div class="sb-row head"><span></span><span>Team</span><span style="text-align:right">Score</span><span style="text-align:right">PPD Avg</span></div>
     <div id="sb-list"></div>
   </div>
   <div id="rosters" class="sec"><div id="roster-list"></div></div>
@@ -92,33 +91,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <script>
 const TEAMS=[
-  {id:'AC',name:'The Final Cut',owner:'AC',budget:81},
-  {id:'BL',name:'Complex Productions',owner:'BL',budget:76},
-  {id:'DR',name:'Fuck David Zaslav Pictures',owner:'DR',budget:100},
-  {id:'JC',name:'Studio Six Productions',owner:'JC',budget:75},
-  {id:'ZP',name:'Box Office Bandits',owner:'ZP',budget:63}
+  {id:'AC',name:'The Final Cut',owner:'AC'},
+  {id:'BL',name:'Complex Productions',owner:'BL'},
+  {id:'DR',name:'Fuck David Zaslav Pictures',owner:'DR'},
+  {id:'JC',name:'Studio Six Productions',owner:'JC'},
+  {id:'ZP',name:'Box Office Bandits',owner:'ZP'}
 ];
 const DEF=[
-  {id:1,team:'AC',title:'Wuthering Heights',cost:40,bo:234.404,lbd:3.9,mc:77,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:2,team:'AC',title:'28 Years Later: The Bone Temple',cost:35,bo:57.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:3,team:'AC',title:'Return to Silent Hill',cost:5,bo:43.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:4,team:'AC',title:'We Bury the Dead',cost:1,bo:3.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:5,team:'BL',title:'Dracula',cost:38,bo:42.3,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:6,team:'BL',title:'Ready or Not 2',cost:30,bo:11.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:7,team:'BL',title:'How to Make a Killing',cost:3,bo:11.5,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:8,team:'BL',title:'Peaky Blinders: The Immortal Man',cost:5,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:9,team:'DR',title:'Hoppers',cost:50,bo:242.6,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:10,team:'DR',title:'GOAT',cost:14,bo:174.5,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:11,team:'DR',title:'Send Help',cost:31,bo:93.9,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:12,team:'DR',title:'The Breadwinner',cost:5,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:13,team:'JC',title:'Project Hail Mary',cost:72,bo:141.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:14,team:'JC',title:'Reminders of Him',cost:1,bo:54.0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:15,team:'JC',title:'I Can Only Imagine 2',cost:1,bo:18.4,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:16,team:'JC',title:'Psycho Killer',cost:1,bo:2.6,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:17,team:'ZP',title:'Scream 7',cost:36,bo:193.8,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:18,team:'ZP',title:'Mercy',cost:11,bo:54.3,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:19,team:'ZP',title:'The Bride!',cost:12,bo:23.2,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
-  {id:20,team:'ZP',title:'Redux Redux',cost:4,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0}
+  {id:1,team:'AC',title:'28 Years Later: The Bone Temple',cost:35,bo:57.85066,lbd:3.9,mc:77,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:2,team:'AC',title:'Wuthering Heights',cost:40,bo:234.404343,lbd:2.8,mc:55,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:3,team:'AC',title:'Return to Silent Hill',cost:5,bo:43.023696,lbd:1.5,mc:34,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:4,team:'AC',title:'We Bury the Dead',cost:1,bo:3.883672,lbd:2.8,mc:61,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:5,team:'BL',title:'Dracula',cost:38,bo:42.330654,lbd:3.1,mc:44,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:6,team:'BL',title:'Peaky Blinders: The Immortal Man',cost:5,bo:0,lbd:3.4,mc:59,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:7,team:'BL',title:'Ready or Not 2',cost:30,bo:11.9,lbd:3.5,mc:59,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:8,team:'BL',title:'How to Make a Killing',cost:3,bo:11.486585,lbd:3.2,mc:49,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:9,team:'DR',title:'Hoppers',cost:50,bo:242.586869,lbd:3.9,mc:73,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:10,team:'DR',title:'The Breadwinner',cost:5,bo:0,lbd:0,mc:0,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:11,team:'DR',title:'GOAT',cost:14,bo:174.508,lbd:3.4,mc:60,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:12,team:'DR',title:'Send Help',cost:31,bo:93.904781,lbd:3.5,mc:75,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:13,team:'JC',title:'Project Hail Mary',cost:72,bo:140.983746,lbd:4.4,mc:77,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:14,team:'JC',title:'I Can Only Imagine 2',cost:1,bo:18.444729,lbd:3.4,mc:43,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:15,team:'JC',title:'Reminders of Him',cost:1,bo:54.001855,lbd:2.6,mc:49,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:16,team:'JC',title:'Psycho Killer',cost:1,bo:2.55507,lbd:2.0,mc:26,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:17,team:'ZP',title:'The Bride!',cost:12,bo:23.243018,lbd:3.0,mc:54,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:18,team:'ZP',title:'Mercy',cost:11,bo:54.310041,lbd:2.5,mc:34,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:19,team:'ZP',title:'Scream 7',cost:36,bo:193.8347,lbd:2.3,mc:35,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0},
+  {id:20,team:'ZP',title:'Redux Redux',cost:4,bo:0,lbd:3.4,mc:72,oscN:0,oscW:0,ggN:0,ggW:0,ccN:0,ccW:0,sagN:0,sagW:0,dgaN:0,dgaW:0,baftaN:0,baftaW:0,wgaN:0,wgaW:0,pgaN:0,pgaW:0}
 ];
 function lf(){const s=localStorage.getItem('fml2');return s?JSON.parse(s):DEF;}
 function sf(d){localStorage.setItem('fml2',JSON.stringify(d));}
@@ -142,7 +141,7 @@ function renderBoard(){
   const teams=TEAMS.map(t=>({...t,...ts(films,t.id)})).sort((a,b)=>b.total-a.total);
   const rc=['r1','r2','r3','',''];
   document.getElementById('sb-list').innerHTML=teams.map((t,i)=>
-    '<div class="sb-row"><div class="rank '+rc[i]+'">'+(i+1)+'</div><div><div class="team-name">'+t.name+'</div><div class="team-owner">'+t.owner+'</div></div><div class="score">'+t.total.toFixed(2)+'</div><div class="ppd">'+t.ppdAvg.toFixed(2)+'</div><div class="budget">'+t.budget+'</div></div>'
+    '<div class="sb-row"><div class="rank '+rc[i]+'">'+(i+1)+'</div><div><div class="team-name">'+t.name+'</div><div class="team-owner">'+t.owner+'</div></div><div class="score">'+t.total.toFixed(2)+'</div><div class="ppd">'+t.ppdAvg.toFixed(2)+'</div></div>'
   ).join('');
 }
 function renderRosters(){
@@ -150,7 +149,7 @@ function renderRosters(){
   document.getElementById('roster-list').innerHTML=TEAMS.map(t=>{
     const{total,scored}=ts(films,t.id);
     const rows=scored.map(({f,s})=>
-      '<tr class="frow" onclick="openModal('+f.id+')"><td>'+f.title+'</td><td class="r">'+f.cost+'</td><td class="r">'+f.bo.toFixed(1)+'</td><td class="fpts">'+s.total.toFixed(2)+'</td><td class="fppd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'&#x2014;')+'</td></tr>'
+      '<tr class="frow" onclick="openModal('+f.id+')"><td>'+f.title+'</td><td class="r">'+f.cost+'</td><td class="r">'+f.bo.toFixed(3)+'</td><td class="fpts">'+s.total.toFixed(2)+'</td><td class="fppd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'&#x2014;')+'</td></tr>'
     ).join('');
     return '<div class="team-block"><div class="team-header"><h3>'+t.name+' <span style="font-weight:400;color:#555;font-size:12px">('+t.owner+')</span></h3><span class="tpts">'+total.toFixed(2)+' pts</span></div><table class="film-table"><tr><th>Film</th><th class="r">Cost</th><th class="r">B.O. ($M)</th><th class="r">Pts</th><th class="r">PPD</th></tr>'+rows+'</table></div>';
   }).join('');
@@ -159,7 +158,7 @@ function openModal(fid){
   const f=lf().find(x=>x.id===fid),s=sc(f),t=TEAMS.find(x=>x.id===f.team);
   document.getElementById('m-title').textContent=f.title;
   document.getElementById('m-sub').textContent=t.name+' \u2014 Cost: '+f.cost;
-  const cats=[['Box Office','$'+f.bo+'M',s.bo],['Letterboxd',''+f.lbd,s.lbd],['MetaCritic',''+f.mc,s.mc],['Oscars',f.oscN+'N/'+f.oscW+'W',s.osc],['Golden Globes',f.ggN+'N/'+f.ggW+'W',s.gg],['Critics Choice',f.ccN+'N/'+f.ccW+'W',s.cc],['SAG',f.sagN+'N/'+f.sagW+'W',s.sag],['DGA',f.dgaN+'N/'+f.dgaW+'W',s.dga],['BAFTA',f.baftaN+'N/'+f.baftaW+'W',s.bafta],['WGA',f.wgaN+'N/'+f.wgaW+'W',s.wga],['PGA',f.pgaN+'N/'+f.pgaW+'W',s.pga]];
+  const cats=[['Box Office','$'+f.bo.toFixed(3)+'M',s.bo],['Letterboxd',''+f.lbd,s.lbd],['MetaCritic',''+f.mc,s.mc],['Oscars',f.oscN+'N/'+f.oscW+'W',s.osc],['Golden Globes',f.ggN+'N/'+f.ggW+'W',s.gg],['Critics Choice',f.ccN+'N/'+f.ccW+'W',s.cc],['SAG',f.sagN+'N/'+f.sagW+'W',s.sag],['DGA',f.dgaN+'N/'+f.dgaW+'W',s.dga],['BAFTA',f.baftaN+'N/'+f.baftaW+'W',s.bafta],['WGA',f.wgaN+'N/'+f.wgaW+'W',s.wga],['PGA',f.pgaN+'N/'+f.pgaW+'W',s.pga]];
   document.getElementById('m-cats').innerHTML=cats.map(([n,r,p])=>'<div class="cat-row"><span class="cat-name">'+n+' <span class="cat-raw">('+r+')</span></span><span class="cat-pts">'+p.toFixed(2)+'</span></div>').join('');
   document.getElementById('m-total').textContent=s.total.toFixed(2);
   document.getElementById('modal').classList.add('open');
