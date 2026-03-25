@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FML 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>@font-face{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-display:swap;}</style>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100vh}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#cc0000;color:#111;min-height:100vh}
 .header{background:#111;border-bottom:4px solid #cc0000;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.15em;color:#fff;line-height:1}
+.logo{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:32px;letter-spacing:0.15em;color:#fff;line-height:1}
 .logo span{color:#f5c400}
 .sub{font-size:11px;color:#888;margin-top:2px;letter-spacing:0.06em;text-transform:uppercase}
 .nav{display:flex;gap:4px}
@@ -18,30 +18,30 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .nav button.active{color:#f5c400;border-color:#f5c400}
 .wrap{max-width:1100px;margin:0 auto;padding:1.5rem}
 .sec{display:none}.sec.on{display:block}
-.page-heading{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:0.08em;color:#fff;margin-bottom:1.25rem;text-shadow:3px 3px 0 rgba(0,0,0,0.3)}
+.page-heading{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:44px;letter-spacing:0.08em;color:#fff;margin-bottom:1.25rem;text-shadow:3px 3px 0 rgba(0,0,0,0.3)}
 
 /* SCOREBOARD */
 .sb-table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden}
 .sb-table thead tr{background:#1a1a1a;border-bottom:3px solid #cc0000}
-.sb-table thead th{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.1em;color:#f5c400;padding:12px 16px;text-align:left}
+.sb-table thead th{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:16px;letter-spacing:0.1em;color:#f5c400;padding:12px 16px;text-align:left}
 .sb-table thead th.r{text-align:right}
 .sb-table tbody tr{border-bottom:1px solid #2a2a2a;transition:background 0.1s}
 .sb-table tbody tr:hover{background:#1a1a1a}
 .sb-table tbody tr:last-child{border-bottom:none}
 .sb-table td{padding:12px 16px;font-size:14px;color:#e8e8e8}
 .sb-table td.r{text-align:right}
-.sb-rank{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#444;width:40px}
+.sb-rank{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:26px;color:#444;width:40px}
 .sb-rank.r1{color:#f5c400}.sb-rank.r2{color:#bbb}.sb-rank.r3{color:#cd7f32}
 .sb-name{font-size:15px;font-weight:600;color:#fff}
 .sb-owner{font-size:11px;color:#666;margin-top:1px}
-.sb-score{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#f5c400;text-align:right}
+.sb-score{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:22px;color:#f5c400;text-align:right}
 .sb-ppd{font-size:13px;color:#4a9edd;text-align:right;font-weight:600}
 
 /* ROSTERS */
 .team-block{background:#111;border-top:4px solid #cc0000;border-radius:8px;margin-bottom:14px;overflow:hidden}
 .team-header{padding:0.875rem 1.25rem;background:#1a1a1a;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2a2a2a}
-.team-header h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.08em;color:#fff}
-.team-header .tpts{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#f5c400}
+.team-header h3{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:20px;letter-spacing:0.08em;color:#fff}
+.team-header .tpts{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:22px;color:#f5c400}
 .film-table{width:100%;border-collapse:collapse}
 .film-table th{font-size:10px;font-weight:600;color:#555;letter-spacing:0.1em;text-transform:uppercase;padding:7px 14px;text-align:left;border-bottom:1px solid #2a2a2a;background:#141414}
 .film-table th.r{text-align:right}
@@ -57,7 +57,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:100;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
 .modal{background:#111;border-top:4px solid #cc0000;border-radius:10px;padding:1.5rem;width:90%;max-width:560px;max-height:90vh;overflow-y:auto}
-.modal h2{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.08em;color:#fff;margin-bottom:4px}
+.modal h2{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:24px;letter-spacing:0.08em;color:#fff;margin-bottom:4px}
 .mclose{float:right;background:transparent;border:none;color:#666;font-size:20px;cursor:pointer;margin-top:-4px;line-height:1}
 .cat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1a1a1a}
 .cat-row:last-child{border-bottom:none}
@@ -66,7 +66,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .cat-pts{font-size:13px;font-weight:700;color:#f5c400}
 .total-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:0.875rem;border-top:1px solid #2a2a2a}
 .total-row span:first-child{font-size:14px;font-weight:600;color:#fff}
-.total-row span:last-child{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#f5c400}
+.total-row span:last-child{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:32px;color:#f5c400}
 
 /* ADMIN */
 .admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
@@ -84,7 +84,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .auction-layout{display:grid;grid-template-columns:1fr 300px;gap:14px}
 .ap{background:#111;border-top:3px solid #cc0000;border-radius:8px;padding:1.25rem;margin-bottom:12px}
 .ap:last-child{margin-bottom:0}
-.ap-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.1em;color:#f5c400;margin-bottom:1rem}
+.ap-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:18px;letter-spacing:0.1em;color:#f5c400;margin-bottom:1rem}
 .film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:6px;max-height:300px;overflow-y:auto;margin-bottom:1rem}
 .fbtn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;padding:8px 10px;cursor:pointer;text-align:left;width:100%;transition:border-color 0.1s}
 .fbtn:hover{border-color:#cc0000}
@@ -99,16 +99,16 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .wi-row button:hover{background:#cc0000;color:#fff}
 .on-deck{background:#0d0d0d;border:2px solid #cc0000;border-radius:8px;padding:1.25rem;margin-bottom:1rem}
 .od-label{font-size:10px;font-weight:700;color:#cc0000;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
-.od-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.06em;color:#fff;margin-bottom:1.25rem;min-height:32px;line-height:1.1}
-.no-film{font-size:14px;color:#333;font-style:italic;font-family:'Inter',sans-serif;font-weight:400}
+.od-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:26px;letter-spacing:0.06em;color:#fff;margin-bottom:1.25rem;min-height:32px;line-height:1.1}
+.no-film{font-size:14px;color:#333;font-style:italic;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
 .current-bid-box{display:flex;align-items:center;justify-content:space-between;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:6px;padding:0.875rem 1rem;margin-bottom:1rem}
 .cb-left{display:flex;flex-direction:column}
 .cb-label{font-size:10px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px}
 .cb-team{font-size:14px;font-weight:600;color:#4a9edd}
-.cb-amount{font-family:'Bebas Neue',sans-serif;font-size:34px;color:#f5c400;line-height:1}
+.cb-amount{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:34px;color:#f5c400;line-height:1}
 .cb-none{font-size:13px;color:#333;font-style:italic}
 .timer-box{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px}
-.timer-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:#333;line-height:1;transition:color 0.3s}
+.timer-num{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:48px;color:#333;line-height:1;transition:color 0.3s}
 .timer-num.urgent{color:#f5c400;animation:pulse 0.5s infinite alternate}
 .timer-num.critical{color:#cc0000;animation:pulse 0.3s infinite alternate}
 .timer-num.idle{color:#333}
@@ -133,7 +133,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .budget-card:last-child{margin-bottom:0}
 .bud-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .bud-name{font-size:13px;font-weight:600;color:#e8e8e8}
-.bud-left{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#f5c400}
+.bud-left{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:18px;color:#f5c400}
 .bud-left.low{color:#cc0000}
 .bar-bg{height:3px;background:#2a2a2a;border-radius:2px;margin-bottom:7px}
 .bar-fill{height:3px;background:#f5c400;border-radius:2px;transition:width 0.3s}
@@ -146,12 +146,12 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .log-entry:last-child{border-bottom:none}
 .le-film{color:#e8e8e8;font-weight:600}
 .le-team{color:#4a9edd;font-size:11px}
-.le-cost{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#f5c400}
+.le-cost{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:20px;color:#f5c400}
 .log-empty{font-size:12px;color:#333;font-style:italic}
 
 /* NOMINATION TRACKER */
 .nom-tracker{background:#1a1a1a;border-left:3px solid #f5c400;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
-.nom-tracker-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.08em;color:#f5c400;margin-bottom:8px}
+.nom-tracker-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:16px;letter-spacing:0.08em;color:#f5c400;margin-bottom:8px}
 .nom-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #2a2a2a}
 .nom-row:last-child{border-bottom:none}
 .nom-team{font-size:12px;font-weight:600;color:#e8e8e8}
@@ -166,7 +166,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 .total-budget-bar{background:#1a1a1a;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
 .tb-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .tb-label span:first-child{font-size:11px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase}
-.tb-label span:last-child{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#f5c400}
+.tb-label span:last-child{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:16px;color:#f5c400}
 .tb-bg{height:6px;background:#2a2a2a;border-radius:3px}
 .tb-fill{height:6px;background:#cc0000;border-radius:3px;transition:width 0.4s}
 .tb-sub{font-size:10px;color:#555;margin-top:4px;text-align:right}
@@ -181,8 +181,7 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 <div class="header">
   <div><div class="logo">F<span>M</span>L</div><div class="sub">Fantasy Movie League &bull; 2026</div></div>
   <nav class="nav">
-    <button class="active" onclick="show('board',this)">Scoreboard</button>
-    <button onclick="show('rosters',this)">Rosters</button>
+    <button class="active" onclick="show('league',this)">League</button>
     <button onclick="show('auction',this)">Auction</button>
     <button onclick="show('admin',this)">Admin</button>
   </nav>
@@ -191,36 +190,17 @@ body{font-family:'Inter',sans-serif;background:#cc0000;color:#111;min-height:100
 <div class="wrap">
 
   <!-- SCOREBOARD -->
-  <div id="board" class="sec on">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.25rem">
-      <div class="page-heading" style="margin-bottom:0">Scoreboard</div>
+  <div id="league" class="sec on">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem">
+      <div class="page-heading" style="margin-bottom:0">2026 League</div>
       <div style="display:flex;gap:6px">
         <button class="btn-undo" id="qbtn-all" onclick="setQtr('all',this)" style="color:#f5c400;border-color:#f5c400">All</button>
         <button class="btn-undo" id="qbtn-Q1" onclick="setQtr('Q1',this)">Q1</button>
         <button class="btn-undo" id="qbtn-Q2" onclick="setQtr('Q2',this)">Q2</button>
       </div>
     </div>
-    <table class="sb-table">
-      <thead><tr>
-        <th style="width:44px">#</th>
-        <th>Production Company</th>
-        <th class="r">Score</th>
-        <th class="r">PPD Avg</th>
-      </tr></thead>
-      <tbody id="sb-list"></tbody>
-    </table>
-  </div>
-
-  <!-- ROSTERS -->
-  <div id="rosters" class="sec">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.25rem">
-      <div class="page-heading" style="margin-bottom:0">Rosters</div>
-      <div style="display:flex;gap:6px">
-        <button class="btn-undo" id="rbtn-all" onclick="setRosterQtr('all',this)" style="color:#f5c400;border-color:#f5c400">All</button>
-        <button class="btn-undo" id="rbtn-Q1" onclick="setRosterQtr('Q1',this)">Q1</button>
-        <button class="btn-undo" id="rbtn-Q2" onclick="setRosterQtr('Q2',this)">Q2</button>
-      </div>
-    </div><div id="roster-list"></div></div>
+    <div id="league-list"></div>
+  </div></div>
 
   <!-- AUCTION -->
   <div id="auction" class="sec">
@@ -392,7 +372,7 @@ function ts(films,tid){
   const tf=films.filter(f=>f.team===tid);
   const scored=tf.map(f=>({f,s:sc(f)}));
   const total=scored.reduce((a,x)=>a+x.s.total,0);
-  const ppdAvg=scored.reduce((a,x)=>a+(x.f.cost>0?x.s.total/x.f.cost:0),0)/scored.length;
+  const ppdAvg=scored.length?scored.reduce((a,x)=>a+(x.f.cost>0?x.s.total/x.f.cost:0),0)/scored.length:0;
   return{total,ppdAvg,scored};
 }
 
@@ -403,33 +383,52 @@ function setQtr(q,btn){
   activeQtr=q;
   document.querySelectorAll('[id^="qbtn-"]').forEach(b=>{b.style.color='';b.style.borderColor='';});
   btn.style.color='#f5c400';btn.style.borderColor='#f5c400';
-  renderBoard();
+  renderLeague();
 }
-function setRosterQtr(q,btn){
-  activeRosterQtr=q;
-  document.querySelectorAll('[id^="rbtn-"]').forEach(b=>{b.style.color='';b.style.borderColor='';});
-  btn.style.color='#f5c400';btn.style.borderColor='#f5c400';
-  renderRosters();
-}
-function renderBoard(){
-  const films=activeQtr==='all'?lfAll():lf(activeQtr);
-  const teams=TEAMS.map(t=>({...t,...ts(films,t.id)})).sort((a,b)=>b.total-a.total);
-  const rc=['r1','r2','r3','',''];
-  document.getElementById('sb-list').innerHTML=teams.map((t,i)=>
-    '<tr><td><div class="sb-rank '+rc[i]+'">'+(i+1)+'</div></td><td><div class="sb-name">'+t.name+'</div><div class="sb-owner">'+t.owner+'</div></td><td class="sb-score r">'+t.total.toFixed(2)+'</td><td class="sb-ppd r">'+t.ppdAvg.toFixed(2)+'</td></tr>'
-  ).join('');
-}
+function renderBoard(){ renderLeague(); }
 
 // ─── ROSTERS ─────────────────────────────────────────────
-function renderRosters(){
-  const films=activeRosterQtr==='all'?lfAll():lf(activeRosterQtr);
-  document.getElementById('roster-list').innerHTML=TEAMS.map(t=>{
-    const{total,scored}=ts(films,t.id);
-    const rows=scored.map(({f,s})=>
-      '<tr class="frow" onclick="openModal('+f.id+')"><td>'+f.title+'</td><td class="r">'+f.cost+'</td><td class="r">'+f.bo.toFixed(3)+'</td><td class="fpts">'+s.total.toFixed(2)+'</td><td class="fppd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'&#x2014;')+'</td></tr>'
-    ).join('');
-    return '<div class="team-block"><div class="team-header"><h3>'+t.name+' <span style="font-weight:400;color:#555;font-size:12px">('+t.owner+')</span></h3><span class="tpts">'+total.toFixed(2)+' pts</span></div><table class="film-table"><tr><th>Film</th><th class="r">Cost</th><th class="r">B.O. ($M)</th><th class="r">Pts</th><th class="r">PPD</th></tr>'+rows+'</table></div>';
+function renderRosters(){ renderLeague(); }
+function renderLeague(){
+  const films=activeQtr==='all'?lfAll():lf(activeQtr);
+  const ranked=TEAMS.map(t=>({...t,...ts(films,t.id)})).sort((a,b)=>b.total-a.total);
+  const rc=['r1','r2','r3','',''];
+  document.getElementById('league-list').innerHTML=ranked.map((t,i)=>{
+    const{scored}=ts(films,t.id);
+    const totalSpent=scored.reduce((a,x)=>a+x.f.cost,0);
+    const topFilm=scored.length?scored.reduce((a,x)=>x.s.total>a.s.total?x:a,scored[0]):null;
+    const rows=scored.map(({f,s})=>{
+      const qtag=f.id>=100?'Q2':'Q1';
+      const qshow=activeQtr==='all'?'<span class="lc-quarter-tag">'+qtag+'</span>':'';
+      return '<tr class="clickable" onclick="openModal('+f.id+')"><td>'+f.title+qshow+'</td><td class="r">'+f.cost+'</td><td class="r">'+(f.bo>0?f.bo.toFixed(1):'—')+'</td><td class="fp">'+s.total.toFixed(2)+'</td><td class="fd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'—')+'</td></tr>';
+    }).join('');
+    return '<div class="league-card" id="lc-'+t.id+'">'
+      +'<div class="league-card-header" onclick="toggleCard(&apos;'+t.id+'&apos;)">'
+      +'<div class="lc-rank '+rc[i]+'">'+(i+1)+'</div>'
+      +'<div class="lc-info"><div class="lc-name">'+t.name+'</div><div class="lc-owner">'+t.owner+'</div></div>'
+      +'<div class="lc-score-block"><div class="lc-score-label">Score</div><div class="lc-score-val">'+t.total.toFixed(2)+'</div></div>'
+      +'<div class="lc-ppd-block"><div class="lc-ppd-label">PPD Avg</div><div class="lc-ppd-val">'+t.ppdAvg.toFixed(2)+'</div></div>'
+      +'<div class="lc-chevron" id="chev-'+t.id+'">&#9654;</div>'
+      +'</div>'
+      +'<div class="lc-body" id="lcb-'+t.id+'">'
+      +'<table class="lc-films"><tr><th>Film</th><th class="r">Cost</th><th class="r">B.O. ($M)</th><th class="r">Pts</th><th class="r">PPD</th></tr>'
+      +rows+'</table>'
+      +'<div class="lc-footer">'
+      +'<div class="lc-footer-stat"><div class="fsl">Films</div><div class="fsv">'+scored.length+'</div></div>'
+      +'<div class="lc-footer-stat"><div class="fsl">Spent</div><div class="fsv">$'+totalSpent+'</div></div>'
+      +'<div class="lc-footer-stat"><div class="fsl">Best Film</div><div class="fsv">'+(topFilm?topFilm.f.title.split(' ').slice(0,2).join(' '):'—')+'</div></div>'
+      +'<div class="lc-footer-stat"><div class="fsl">Best PPD</div><div class="fsv">'+(scored.length?scored.reduce((a,x)=>(x.f.cost>0&&x.s.total/x.f.cost>a)?x.s.total/x.f.cost:a,0).toFixed(1):'—')+'</div></div>'
+      +'</div>'
+      +'</div>'
+      +'</div>';
   }).join('');
+}
+function toggleCard(tid){
+  const body=document.getElementById('lcb-'+tid);
+  const chev=document.getElementById('chev-'+tid);
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  chev.classList.toggle('open',!isOpen);
 }
 
 // ─── MODAL ───────────────────────────────────────────────
@@ -461,6 +460,33 @@ function saveFilm(fid){
   sf(q,films);renderBoard();renderRosters();
   const n=document.getElementById('saved-'+fid);n.style.display='block';setTimeout(()=>n.style.display='none',2000);
 }
+
+const BUDGET=100;
+const MAX_PICKS=4;
+
+const Q2_POOL=[
+  'Super Mario Galaxy Movie',
+  'Disclosure Day',
+  'Michael',
+  'Star Wars: Mando and Grogu',
+  'Toy Story 5',
+  'The Devil Wears Prada 2',
+  'Scary Movie 6',
+  'Supergirl',
+  'Jackass 5',
+  'You, Me and Tuscany',
+  'Over Your Dead Body',
+  'I Love Boosters',
+  'Passengers',
+  'In the Grey',
+  'The Drama',
+  'The Mummy',
+  'Obsession',
+  'Backrooms',
+  'The Sheep Detectives',
+  'Mother Mary',
+  'Erupcja'
+];
 
 // ─── AUCTION STATE ───────────────────────────────────────
 let aFilms = Q2_POOL.map((t,i)=>({id:i+1,title:t,sold:false}));
@@ -798,6 +824,7 @@ function show(id,btn){
   document.getElementById(id).classList.add('on');
   btn.classList.add('active');
   if(id==='admin') renderAdmin();
+  else renderLeague();
 }
 
 // ─── INIT ────────────────────────────────────────────────
@@ -816,14 +843,13 @@ if(aCurBid){
   tn.className='cb-team';tn.textContent=t.name;
   ta.style.display='block';ta.textContent='$'+aCurBid.amount;
 }
-renderBoard();
-renderRosters();
 renderFilmGrid();
 renderBudgets();
 renderLog();
 renderNomTracker();
 renderTotalBudget();
 renderMinBidHint();
+renderLeague();
 </script>
 </body>
 </html>
