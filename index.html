@@ -149,6 +149,26 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .le-cost{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:20px;color:#f5c400}
 .log-empty{font-size:12px;color:#333;font-style:italic}
 
+/* TMDB LIVE DATA */
+.tmdb-bar{display:flex;align-items:center;gap:10px;background:#111;border:1px solid #1a1a1a;border-radius:6px;padding:8px 14px;margin-bottom:14px;font-size:12px}
+.tmdb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tmdb-dot.live{background:#4a9e4a;animation:pulse 2s infinite alternate}
+.tmdb-dot.offline{background:#555}
+.tmdb-status{color:#888;flex:1}
+.tmdb-status .live-label{color:#4a9e4a;font-weight:600}
+.tmdb-status .offline-label{color:#555}
+.tmdb-status .ts{color:#444;margin-left:6px}
+.tmdb-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;color:#888;font-size:11px;font-weight:600;padding:4px 10px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase}
+.tmdb-btn:hover{border-color:#4a9e4a;color:#4a9e4a}
+.tmdb-btn:disabled{opacity:.4;cursor:default;pointer-events:none}
+.tmdb-btn.loading{color:#f5c400;border-color:#f5c400}
+.bo-live{position:relative}
+.bo-live::after{content:"●";color:#4a9e4a;font-size:7px;margin-left:3px;vertical-align:super}
+.tmdb-config{background:#111;border:1px solid #2a2a2a;border-radius:8px;padding:14px;margin-bottom:14px}
+.tmdb-config label{font-size:11px;color:#555;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.tmdb-config input{background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;color:#e8e8e8;font-size:13px;padding:5px 10px;width:100%}
+.tmdb-config .hint{font-size:10px;color:#333;margin-top:4px}
+
 /* NOMINATION TRACKER */
 .nom-tracker{background:#1a1a1a;border-left:3px solid #f5c400;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
 .nom-tracker-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif,Impact,'Arial Narrow',Arial,sans-serif;font-size:16px;letter-spacing:0.08em;color:#f5c400;margin-bottom:8px}
@@ -292,6 +312,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
         <button class="btn-undo" id="qbtn-Q2" onclick="setQtr('Q2',this)">Q2</button>
       </div>
     </div>
+    <div class="tmdb-bar" id="tmdb-bar"></div>
     <div id="league-list"></div>
   </div></div>
 
@@ -379,7 +400,17 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   </div>
 
   <!-- ADMIN -->
-  <div id="admin" class="sec"><div class="page-heading">Admin — Update Scores</div><div class="admin-grid" id="admin-grid"></div></div>
+  <div id="admin" class="sec"><div class="page-heading">Admin — Update Scores</div>
+    <div class="tmdb-config" id="tmdb-config">
+      <label>TMDB API Key</label>
+      <input type="text" id="tmdb-key-input" placeholder="Enter your TMDB v3 API key..." value="">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="sbtn" style="width:auto;padding:6px 16px" onclick="saveTmdbKey(document.getElementById('tmdb-key-input').value);fetchAllTMDB();">Save &amp; Fetch</button>
+        <button class="btn-undo" onclick="saveTmdbKey('');document.getElementById('tmdb-key-input').value='';tmdbLiveData={};renderTmdbBar();renderLeague();">Clear</button>
+      </div>
+      <div class="hint">Get a free key at themoviedb.org/settings/api — enables live worldwide gross updates</div>
+    </div>
+    <div class="admin-grid" id="admin-grid"></div></div>
 
 </div>
 
@@ -592,7 +623,8 @@ function renderLeague(){
     const rows=scored.map(({f,s})=>{
       const qtag=f.id>=100?'Q2':'Q1';
       const qshow=activeQtr==='all'?'<span class="lc-quarter-tag">'+qtag+'</span>':'';
-      return '<tr class="clickable" onclick="openModal('+f.id+')"><td>'+f.title+qshow+'</td><td class="r">'+f.cost+'</td><td class="r">'+(f.bo>0?f.bo.toFixed(1):'—')+'</td><td class="fp">'+s.total.toFixed(2)+'</td><td class="fd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'—')+'</td></tr>';
+      const liveCls=isLiveBo(f.id)?' bo-live':'';
+      return '<tr class="clickable" onclick="openModal('+f.id+')"><td>'+f.title+qshow+'</td><td class="r">'+f.cost+'</td><td class="r'+liveCls+'">'+(f.bo>0?f.bo.toFixed(1):'—')+'</td><td class="fp">'+s.total.toFixed(2)+'</td><td class="fd">'+(f.cost>0?(s.total/f.cost).toFixed(2):'—')+'</td></tr>';
     }).join('');
     return '<div class="league-card" id="lc-'+t.id+'">'
       +'<div class="league-card-header" onclick="toggleCard(&apos;'+t.id+'&apos;)">'
@@ -625,10 +657,12 @@ function toggleCard(tid){
 
 // ─── MODAL ───────────────────────────────────────────────
 function openModal(fid){
-  const f=lf().find(x=>x.id===fid),s=sc(f),t=TEAMS.find(x=>x.id===f.team);
+  const allF=lfAll();
+  const f=allF.find(x=>x.id===fid),s=sc(f),t=TEAMS.find(x=>x.id===f.team);
   document.getElementById('m-title').textContent=f.title;
   document.getElementById('m-sub').textContent=t.name+' \u2014 Cost: '+f.cost;
-  const cats=[['Box Office','$'+f.bo.toFixed(3)+'M',s.bo],['Letterboxd',''+f.lbd,s.lbd],['MetaCritic',''+f.mc,s.mc],['Oscars',f.oscN+'N/'+f.oscW+'W',s.osc],['Golden Globes',f.ggN+'N/'+f.ggW+'W',s.gg],['Critics Choice',f.ccN+'N/'+f.ccW+'W',s.cc],['SAG',f.sagN+'N/'+f.sagW+'W',s.sag],['DGA',f.dgaN+'N/'+f.dgaW+'W',s.dga],['BAFTA',f.baftaN+'N/'+f.baftaW+'W',s.bafta],['WGA',f.wgaN+'N/'+f.wgaW+'W',s.wga],['PGA',f.pgaN+'N/'+f.pgaW+'W',s.pga]];
+  const boLabel=isLiveBo(fid)?'Box Office <span style="color:#4a9e4a;font-size:9px">● LIVE</span>':'Box Office';
+  const cats=[[boLabel,'$'+f.bo.toFixed(3)+'M',s.bo],['Letterboxd',''+f.lbd,s.lbd],['MetaCritic',''+f.mc,s.mc],['Oscars',f.oscN+'N/'+f.oscW+'W',s.osc],['Golden Globes',f.ggN+'N/'+f.ggW+'W',s.gg],['Critics Choice',f.ccN+'N/'+f.ccW+'W',s.cc],['SAG',f.sagN+'N/'+f.sagW+'W',s.sag],['DGA',f.dgaN+'N/'+f.dgaW+'W',s.dga],['BAFTA',f.baftaN+'N/'+f.baftaW+'W',s.bafta],['WGA',f.wgaN+'N/'+f.wgaW+'W',s.wga],['PGA',f.pgaN+'N/'+f.pgaW+'W',s.pga]];
   document.getElementById('m-cats').innerHTML=cats.map(([n,r,p])=>'<div class="cat-row"><span class="cat-name">'+n+' <span class="cat-raw">('+r+')</span></span><span class="cat-pts">'+p.toFixed(2)+'</span></div>').join('');
   document.getElementById('m-total').textContent=s.total.toFixed(2);
   document.getElementById('modal').classList.add('open');
@@ -638,11 +672,16 @@ document.getElementById('modal').addEventListener('click',e=>{if(e.target===docu
 
 // ─── ADMIN ───────────────────────────────────────────────
 function renderAdmin(){
+  const ki=document.getElementById('tmdb-key-input');
+  if(ki) ki.value=tmdbApiKey;
   const films=lfAll();
   document.getElementById('admin-grid').innerHTML=films.map(f=>{
     const t=TEAMS.find(x=>x.id===f.team);
     const fields=[['bo','Box Office ($M)','0.001'],['lbd','Letterboxd','0.1'],['mc','MetaCritic','1'],['oscN','Oscar Noms','1'],['oscW','Oscar Wins','1'],['ggN','GG Noms','1'],['ggW','GG Wins','1'],['ccN','CC Noms','1'],['ccW','CC Wins','1'],['sagN','SAG Noms','1'],['sagW','SAG Wins','1'],['dgaN','DGA Noms','1'],['dgaW','DGA Wins','1'],['baftaN','BAFTA Noms','1'],['baftaW','BAFTA Wins','1'],['wgaN','WGA Noms','1'],['wgaW','WGA Wins','1'],['pgaN','PGA Noms','1'],['pgaW','PGA Wins','1']];
-    return '<div class="acard"><h3>'+f.title+'</h3><div class="asub">'+t.name+' &bull; Cost: '+f.cost+'</div>'+fields.map(([k,lbl,step])=>'<div class="fr"><label>'+lbl+'</label><input type="number" step="'+step+'" value="'+(f[k]||0)+'" data-id="'+f.id+'" data-field="'+k+'"></div>').join('')+'<button class="sbtn" onclick="saveFilm('+f.id+')">Save</button><div class="notice" id="saved-'+f.id+'">Saved!</div></div>';
+    const tmdbId=TMDB_MAP[f.id]||0;
+    const liveTag=isLiveBo(f.id)?'<span style="color:#4a9e4a;font-size:10px;font-weight:700;margin-left:6px">● LIVE</span>':'';
+    const tmdbTag=tmdbId>0?'<span style="color:#444;font-size:10px;margin-left:6px">TMDB:'+tmdbId+'</span>':'';
+    return '<div class="acard"><h3>'+f.title+liveTag+tmdbTag+'</h3><div class="asub">'+t.name+' &bull; Cost: '+f.cost+'</div>'+fields.map(([k,lbl,step])=>'<div class="fr"><label>'+lbl+'</label><input type="number" step="'+step+'" value="'+(f[k]||0)+'" data-id="'+f.id+'" data-field="'+k+'"></div>').join('')+'<button class="sbtn" onclick="saveFilm('+f.id+')">Save</button><div class="notice" id="saved-'+f.id+'">Saved!</div></div>';
   }).join('');
 }
 function saveFilm(fid){
@@ -1089,6 +1128,175 @@ renderNomTracker();
 renderTotalBudget();
 renderMinBidHint();
 renderLeague();
+
+// ─── TMDB LIVE BOX OFFICE ───────────────────────────────
+// Maps film IDs to TMDB movie IDs for live revenue lookup.
+// Set tmdbId to 0 for films not yet on TMDB.
+const TMDB_MAP = {
+  // Q1 films
+  1: 1100099,   // 28 Years Later: The Bone Temple
+  2: 0,         // Wuthering Heights (2026)
+  3: 1233116,   // Return to Silent Hill
+  4: 0,         // We Bury the Dead
+  5: 1241674,   // Dracula (2026)
+  6: 0,         // Peaky Blinders: The Immortal Man
+  7: 1199513,   // Ready or Not 2
+  8: 0,         // How to Make a Killing
+  9: 1022789,   // Hoppers
+  10: 0,        // The Breadwinner
+  11: 0,        // GOAT
+  12: 0,        // Send Help
+  13: 565770,   // Project Hail Mary
+  14: 0,        // I Can Only Imagine 2
+  15: 0,        // Reminders of Him
+  16: 0,        // Psycho Killer
+  17: 1110182,  // The Bride!
+  18: 0,        // Mercy
+  19: 1192132,  // Scream 7
+  20: 0,        // Redux Redux
+  // Q2 films
+  101: 0,       // Supergirl
+  102: 1139737, // The Devil Wears Prada 2
+  103: 0,       // Scary Movie 6
+  104: 0,       // In the Grey
+  105: 1233555, // Super Mario Galaxy Movie
+  106: 0,       // Backrooms
+  107: 0,       // The Mummy (2026)
+  108: 0,       // The Sheep Detectives
+  109: 1233571, // Star Wars: Mando and Grogu
+  110: 1301945, // Toy Story 5
+  111: 835113,  // Mortal Kombat 2
+  112: 0,       // Jackass 5
+  113: 0,       // Disclosure Day
+  114: 0,       // Obsession
+  115: 0,       // I Love Boosters
+  116: 0,       // You, Me and Tuscany
+  117: 0,       // Michael
+  118: 0,       // The Drama
+  119: 0,       // Masters of the Universe
+  120: 0        // Mother Mary
+};
+
+// TMDB state
+let tmdbApiKey = localStorage.getItem('fml_tmdb_key') || '';
+let tmdbLiveData = {};   // { tmdbId: { revenue, title, release_date } }
+let tmdbLastUpdated = null;
+let tmdbLoading = false;
+
+function saveTmdbKey(key) {
+  tmdbApiKey = key.trim();
+  localStorage.setItem('fml_tmdb_key', tmdbApiKey);
+}
+
+async function fetchTMDBMovie(tmdbId) {
+  const url = 'https://api.themoviedb.org/3/movie/' + tmdbId + '?api_key=' + tmdbApiKey;
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error('TMDB ' + resp.status);
+  return resp.json();
+}
+
+async function fetchAllTMDB() {
+  if (!tmdbApiKey) return;
+  const ids = Object.values(TMDB_MAP).filter(id => id > 0);
+  if (ids.length === 0) return;
+
+  tmdbLoading = true;
+  renderTmdbBar();
+
+  try {
+    // Fetch in batches of 5 to avoid rate limits
+    const results = {};
+    for (let i = 0; i < ids.length; i += 5) {
+      const batch = ids.slice(i, i + 5);
+      const responses = await Promise.allSettled(batch.map(id => fetchTMDBMovie(id)));
+      responses.forEach((res, idx) => {
+        if (res.status === 'fulfilled' && res.value) {
+          const d = res.value;
+          results[batch[idx]] = {
+            revenue: d.revenue || 0,
+            title: d.title,
+            release_date: d.release_date,
+            budget: d.budget || 0
+          };
+        }
+      });
+      // Small delay between batches
+      if (i + 5 < ids.length) await new Promise(r => setTimeout(r, 250));
+    }
+
+    tmdbLiveData = results;
+    tmdbLastUpdated = new Date();
+
+    // Update box office values for films with live revenue
+    updateBOFromTMDB();
+  } catch (err) {
+    console.error('TMDB fetch failed:', err);
+  }
+
+  tmdbLoading = false;
+  renderTmdbBar();
+  renderLeague();
+}
+
+function updateBOFromTMDB() {
+  ['Q1', 'Q2'].forEach(q => {
+    const films = lf(q);
+    let changed = false;
+    films.forEach(f => {
+      const tmdbId = TMDB_MAP[f.id];
+      if (!tmdbId || !tmdbLiveData[tmdbId]) return;
+      const rev = tmdbLiveData[tmdbId].revenue;
+      if (rev > 0) {
+        const millions = rev / 1000000;
+        if (Math.abs(f.bo - millions) > 0.001) {
+          f.bo = parseFloat(millions.toFixed(6));
+          f._tmdbLive = true;
+          changed = true;
+        }
+      }
+    });
+    if (changed) sf(q, films);
+  });
+}
+
+// Check if a film has live TMDB data
+function isLiveBo(fid) {
+  const tmdbId = TMDB_MAP[fid];
+  if (!tmdbId || !tmdbLiveData[tmdbId]) return false;
+  return tmdbLiveData[tmdbId].revenue > 0;
+}
+
+function renderTmdbBar() {
+  const bar = document.getElementById('tmdb-bar');
+  if (!bar) return;
+
+  const hasKey = !!tmdbApiKey;
+  const hasData = Object.keys(tmdbLiveData).length > 0;
+  const liveCount = Object.values(tmdbLiveData).filter(d => d.revenue > 0).length;
+
+  if (tmdbLoading) {
+    bar.innerHTML = '<div class="tmdb-dot live"></div>'
+      + '<div class="tmdb-status"><span class="live-label">Fetching live data...</span></div>'
+      + '<button class="tmdb-btn loading" disabled>Loading</button>';
+  } else if (hasData && liveCount > 0) {
+    const ts = tmdbLastUpdated ? tmdbLastUpdated.toLocaleTimeString() : '';
+    bar.innerHTML = '<div class="tmdb-dot live"></div>'
+      + '<div class="tmdb-status"><span class="live-label">TMDB Live</span> — ' + liveCount + ' films with revenue data'
+      + '<span class="ts">' + ts + '</span></div>'
+      + '<button class="tmdb-btn" onclick="fetchAllTMDB()">Refresh</button>';
+  } else if (hasKey) {
+    bar.innerHTML = '<div class="tmdb-dot offline"></div>'
+      + '<div class="tmdb-status"><span class="offline-label">No live revenue data available</span></div>'
+      + '<button class="tmdb-btn" onclick="fetchAllTMDB()">Retry</button>';
+  } else {
+    bar.innerHTML = '<div class="tmdb-dot offline"></div>'
+      + '<div class="tmdb-status"><span class="offline-label">Add TMDB API key in Admin for live box office</span></div>';
+  }
+}
+
+// Init TMDB on load
+renderTmdbBar();
+if (tmdbApiKey) fetchAllTMDB();
 </script>
 </body>
 </html>
