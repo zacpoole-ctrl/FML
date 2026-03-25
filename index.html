@@ -690,8 +690,11 @@ function renderQuickAdmin(){
     '<table class="quick-table">'
     +'<tr><th>Film</th><th>Owner</th><th>Qtr</th><th class="r">Box Office ($M)</th><th class="r">Letterboxd</th><th class="r">MetaCritic</th></tr>'
     +rows+'</table>'
+    +'<div style="display:flex;align-items:center;gap:12px;margin-top:1rem">'
     +'<button class="quick-save-btn" onclick="saveQuickAll()">Save All</button>'
-    +'<span class="save-flash" id="quick-flash">All saved!</span>';
+    +'<button class="quick-save-btn" id="refresh-btn" onclick="refreshBoxOffice()" style="background:#1a3a1a;border:1px solid #4a9e4a;color:#4a9e4a">&#8635; Refresh from The Numbers</button>'
+    +'<span class="save-flash" id="quick-flash"></span>'
+    +'</div>';
 }
 
 function saveQuickAll(){
@@ -719,6 +722,96 @@ function saveQuickAll(){
   const fl=document.getElementById('quick-flash');
   fl.style.display='inline';
   setTimeout(()=>fl.style.display='none',2000);
+}
+
+
+function refreshBoxOffice(){
+  const btn = document.getElementById('refresh-btn');
+  const flash = document.getElementById('quick-flash');
+  btn.disabled = true;
+  btn.textContent = 'Fetching...';
+  flash.style.display = 'inline';
+  flash.style.color = '#4a9edd';
+  flash.textContent = 'Contacting The Numbers...';
+
+  const TN_SLUGS = {
+    1:   'Hoppers-(2026)',
+    2:   'Wuthering-Heights-(2026)',
+    3:   'Return-to-Silent-Hill-(2026)',
+    4:   'We-Bury-the-Dead-(2026)',
+    5:   'Dracula-(2026)',
+    6:   'Peaky-Blinders-The-Immortal-Man-(2026)',
+    7:   'Ready-or-Not-2-(2026)',
+    8:   'How-to-Make-a-Killing-(2026)',
+    9:   'Hoppers-(2026)',
+    10:  null,
+    11:  'GOAT-(2026)',
+    12:  'Send-Help-(2026)',
+    13:  'Project-Hail-Mary-(2026)',
+    14:  'I-Can-Only-Imagine-2-(2026)',
+    15:  'Reminders-of-Him-(2026)',
+    16:  'Psycho-Killer-(2026)',
+    17:  'Bride-The-(2026)',
+    18:  'Mercy-(2026)',
+    19:  'Scream-7-(2026)',
+    20:  'Redux-Redux-(2026)',
+    101: 'Super-Mario-Galaxy-Movie-The-(2026)',
+    102: 'Devil-Wears-Prada-2-The-(2026)',
+    103: 'Scary-Movie-6-(2026)',
+    104: 'In-the-Grey-(2026)',
+    105: 'Super-Mario-Galaxy-Movie-The-(2026)',
+    106: 'Backrooms-(2026)',
+    107: null,
+    108: 'Sheep-Detectives-The-(2026)',
+    109: 'Mandalorian-and-Grogu-The-(2026)',
+    110: 'Toy-Story-5-(2026)',
+    111: 'Mortal-Kombat-II-(2026)',
+    112: null,
+    113: 'Disclosure-Day-(2026)',
+    114: 'Obsession-(2026)',
+    115: 'I-Love-Boosters-(2026)',
+    116: 'You-Me-and-Tuscany-(2026)',
+    117: 'Michael-(2026)',
+    118: 'Drama-The-(2026)',
+    119: 'Masters-of-the-Universe-(2026)',
+    120: 'Mother-Mary-(2025)'
+  };
+
+  const BASE = 'https://www.the-numbers.com/movie/';
+  const allFilms = lfAll();
+  const fetchable = allFilms.filter(f => TN_SLUGS[f.id]);
+  let done = 0;
+  let updated = 0;
+
+  const parseGross = html => {
+    const m = html.match(/Worldwide Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
+    if(m) return parseFloat(m[1].replace(/,/g,'')) / 1000000;
+    const d = html.match(/Domestic Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
+    if(d) return parseFloat(d[1].replace(/,/g,'')) / 1000000;
+    return null;
+  };
+
+  Promise.all(fetchable.map(f =>
+    fetch(BASE + TN_SLUGS[f.id])
+      .then(r => r.text())
+      .then(html => {
+        const gross = parseGross(html);
+        if(gross !== null && gross > 0){
+          const inp = document.querySelector('.qi[data-id="'+f.id+'"]');
+          if(inp){ inp.value = gross.toFixed(3); inp.style.background='#0f2a0f'; }
+          updated++;
+        }
+        done++;
+        flash.textContent = 'Fetching... ' + done + '/' + fetchable.length;
+      })
+      .catch(() => { done++; })
+  )).then(() => {
+    btn.disabled = false;
+    btn.textContent = '\u21BB Refresh from The Numbers';
+    flash.style.color = '#4a9e4a';
+    flash.textContent = updated + ' film' + (updated!==1?'s':'') + ' updated — review and Save All';
+    setTimeout(() => flash.textContent = '', 8000);
+  });
 }
 
 function renderAdmin(){
