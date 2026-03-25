@@ -244,6 +244,27 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .nl-proj-table .winner td{color:#f5c400}
 .nl-divider{border:none;border-top:1px solid #2a2a2a;margin:2rem 0}
 .nl-tag{display:inline-block;font-size:10px;font-weight:700;background:#cc0000;color:#fff;padding:2px 8px;border-radius:3px;letter-spacing:0.06em;margin-right:6px;text-transform:uppercase}
+
+/* CALENDAR */
+.cal-wrap{max-width:900px;margin:0 auto}
+.cal-month{margin-bottom:2.5rem}
+.cal-month-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:36px;letter-spacing:0.1em;color:#fff;border-bottom:3px solid #cc0000;padding-bottom:6px;margin-bottom:1rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day-header{font-size:10px;font-weight:700;color:#555;text-align:center;padding:4px 0;letter-spacing:0.08em;text-transform:uppercase}
+.cal-day{min-height:80px;background:#111;border-radius:4px;padding:4px;position:relative}
+.cal-day.empty{background:transparent}
+.cal-day.today{border:1px solid #cc0000}
+.cal-day-num{font-size:11px;color:#444;font-weight:600;margin-bottom:3px}
+.cal-day.today .cal-day-num{color:#cc0000}
+.cal-film{font-size:10px;font-weight:600;border-radius:3px;padding:2px 4px;margin-bottom:2px;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.team-AC{background:#1a0f00;color:#e87a30;border-left:2px solid #e87a30}
+.team-BL{background:#0f1a00;color:#6db33f;border-left:2px solid #6db33f}
+.team-DR{background:#1a000f;color:#e5b800;border-left:2px solid #e5b800}
+.team-JC{background:#001a1a;color:#4a9edd;border-left:2px solid #4a9edd}
+.team-ZP{background:#1a001a;color:#c060c0;border-left:2px solid #c060c0}
+.cal-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#888}
+.cal-legend-dot{width:10px;height:10px;border-radius:2px}
 </style>
 </head>
 <body>
@@ -252,9 +273,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <div><div class="logo">F<span>M</span>L</div><div class="sub">Fantasy Movie League &bull; 2026</div></div>
   <nav class="nav">
     <button class="active" onclick="show('league',this)">League</button>
+    <button onclick="show('newsletter',this)">Newsletter</button>
+    <button onclick="show('calendar',this)">Calendar</button>
     <button onclick="show('auction',this)">Auction</button>
     <button onclick="show('admin',this)">Admin</button>
-    <button onclick="show('newsletter',this)">Newsletter</button>
   </nav>
 </div>
 
@@ -374,6 +396,21 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 </div>
 </div>
 
+  <!-- CALENDAR -->
+  <div id="calendar" class="sec">
+    <div class="cal-wrap">
+      <div class="page-heading">Q2 2026 Film Calendar</div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#e87a30"></div>The Final Cut (Aliyah)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#6db33f"></div>Complex Productions (Braden)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#e5b800"></div>Fuck David Zaslav (Davis)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#4a9edd"></div>Studio Six (Crews)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#c060c0"></div>Box Office Bandits (Poole)</div>
+      </div>
+      <div id="cal-grid-container"></div>
+    </div>
+  </div>
+
   <!-- NEWSLETTER -->
   <div id="newsletter" class="sec">
     <div class="nl-wrap">
@@ -386,128 +423,77 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
       <div class="nl-body">
 
-        <p>The Q2 auction is in the books. Twenty films. Five teams. One hundred dollars each. And a very wide spread of outcomes when you look at what people actually paid for what they got. This issue breaks down every pick, rates the draft by team, and projects where the standings will land when June closes out.</p>
+        <p>The Q2 auction is in the books. Twenty films. Five teams. One hundred dollars each. Below is a full grade on every pick — no film left unscored.</p>
 
         <h2>The Big Picture</h2>
-
-        <p>Q2 is a genuinely stacked quarter. <strong>Super Mario Galaxy Movie, Mandalorian &amp; Grogu, and Toy Story 5</strong> are three of the most anticipated films of the entire year, all releasing within a ten-week window. The question wasn't whether this quarter would produce points — it was who had the foresight to pay the right price for the right films.</p>
-
-        <p>Two teams dominated the auction room: <strong>Complex Productions (Braden)</strong> landed the single biggest box office bet of the quarter in Mario at $46, and <strong>Studio Six (Crews)</strong> went all-in on the prestige play by dropping $46 on Disclosure Day. Meanwhile, <strong>Box Office Bandits (Poole)</strong> spread across four very different films, <strong>The Final Cut (Aliyah)</strong> quietly assembled the most balanced Q2 roster, and <strong>Fuck David Zaslav Pictures (Davis)</strong> got the most dangerous duo in the draft with Mando and Toy Story.</p>
+        <p>Q2 is genuinely stacked. Mario Galaxy, Mando, and Toy Story 5 are three of the biggest commercial events of the entire year. The question was never whether this quarter would produce points — it was who paid the right price. Two teams stand out: <strong>Davis</strong> got the two best value picks of the draft, and <strong>Braden</strong> made the single biggest bet. Everyone else is fighting for third.</p>
 
         <hr class="nl-divider">
-        <h2>Pick-by-Pick Grades</h2>
+        <h2>All 20 Picks Graded</h2>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Super Mario Galaxy Movie</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $46</div></div>
-            <div class="nl-pick-grade nl-grade-a">A</div>
-          </div>
-          <div class="nl-pick-body">The most expensive pick of the draft and almost certainly the right call. Tracking is currently projecting a $145–160M domestic opening weekend — better heat than the 2023 original that made $1.36B worldwide. With no animated competition until Toy Story 5 in June and the introduction of Yoshi driving family turnout, this film has a clear runway. The $46 price tag is steep but defensible. If it tracks like the original, Braden is looking at 1,200+ points from box office alone.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Super Mario Galaxy Movie</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $46 &bull; Apr 1</div></div><div class="nl-pick-grade nl-grade-a">A</div></div><div class="nl-pick-body">Tracking at $145-160M domestic opening. Better heat than the 2023 original. No animated competition until Toy Story 5 in June. At $46 this is the right film to overpay for. Braden is looking at 1,200+ box office points if it runs like the first film.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Disclosure Day</div><div class="nl-pick-team">Studio Six Productions (Crews)</div><div class="nl-pick-cost">Paid: $46</div></div>
-            <div class="nl-pick-grade nl-grade-b">B+</div>
-          </div>
-          <div class="nl-pick-body">The prestige gamble of the draft. Spielberg returning to alien films for the first time since War of the Worlds, John Williams scoring, Emily Blunt leading — this has awards season written all over it. Box office projections land in the $450–550M worldwide range, which means roughly 450–550 box office points. Where it gets interesting is the awards tail: if this gets the Oppenheimer treatment at year-end, the nominations and wins could add 30–60+ points on top. Crews is betting on October, not June. The risk is that Spielberg's recent prestige films have underperformed commercially. Fabelmans. Bridge of Spies. The floor is real.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">The Drama</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $21 &bull; Apr 3</div></div><div class="nl-pick-grade nl-grade-b">B</div></div><div class="nl-pick-body">Zendaya and Robert Pattinson in an A24 rom-com by Kristoffer Borgli. Tracking ~$15M opening but the Letterboxd and Metacritic scores for this kind of A24 prestige comedy will be high. At $21 this is the right price. Solid floor pick with quality upside.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Toy Story 5</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $37</div></div>
-            <div class="nl-pick-grade nl-grade-a">A</div>
-          </div>
-          <div class="nl-pick-body">The best value of the top-tier picks. Toy Story 5 has the highest awareness tracking of any 2026 film, Tom Hanks is back as Woody, and Pixar is coming off Hoppers outperforming expectations. Industry analysts have it crossing $1B worldwide with ease, which means 1,000+ box office points. At $37, Davis got a film that arguably should have cost $45+. The Letterboxd and Metacritic scores for Pixar sequels trend strong, which adds another 25–30 points on top. This is the best pure value of the draft.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">You, Me and Tuscany</div><div class="nl-pick-team">Studio Six Productions (Crews)</div><div class="nl-pick-cost">Paid: $2 &bull; Apr 10</div></div><div class="nl-pick-grade nl-grade-b">B-</div></div><div class="nl-pick-body">Halle Bailey in a Universal rom-com set in Italy. At $2 this is nearly a free roll. Rom-coms don't win Oscars but this demographic has commercial upside. Don't expect more than 80-120 total points, but the cost justifies it.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Star Wars: Mando and Grogu</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $27</div></div>
-            <div class="nl-pick-grade nl-grade-a">A-</div>
-          </div>
-          <div class="nl-pick-body">At $27, this is a steal. Star Wars returns to theaters after seven years and no significant competition on May 22. One analyst has it projecting $898M worldwide. Jon Favreau, Pedro Pascal, Sigourney Weaver, and a fanbase that has been waiting years for this moment on the big screen. Even a conservative $500M worldwide nets Davis 500 points from box office alone. Davis getting both Mando and Toy Story 5 gives their team two of the three biggest commercial events of the quarter for a combined cost of $64.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Mother Mary</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $1 &bull; Apr 17</div></div><div class="nl-pick-grade nl-grade-a">A+</div></div><div class="nl-pick-body">One dollar. Anne Hathaway, Michaela Coel, Hunter Schafer, FKA Twigs. David Lowery directing for A24. This is the steal of the draft. If it earns even five Oscar nominations, Poole just earned 5 points for $1. The PPD potential here is almost unfair.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">The Devil Wears Prada 2</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $29</div></div>
-            <div class="nl-pick-grade nl-grade-b">B+</div>
-          </div>
-          <div class="nl-pick-body">222 million trailer views in 24 hours. The most-watched comedy trailer in fifteen years. Meryl Streep, Anne Hathaway, Emily Blunt, and Stanley Tucci all back. Early tracking puts it at $55M+ domestic opening. Box Office Theory has it as one of the best-tracking female-driven films in years. At $29, Aliyah got fair value. The ceiling is $600M+ worldwide if it's good, which would mean 600 box office points plus potential acting nominations for Streep or Hathaway.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Michael</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $38 &bull; Apr 24</div></div><div class="nl-pick-grade nl-grade-c">C+</div></div><div class="nl-pick-body">The riskiest expensive pick of the draft. MJ's real nephew playing MJ is fascinating. The estate's heavy involvement is the concern. Sanitized biopics get punished by critics. Oscar nominations for costume and score are plausible. But if Metacritic comes in under 60 and it opens soft, this is Poole's albatross at $38.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Michael</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $38</div></div>
-            <div class="nl-pick-grade nl-grade-c">C+</div>
-          </div>
-          <div class="nl-pick-body">The riskiest big-money bet of the draft. The MJ biopic with his real nephew has massive cultural appeal but the estate's heavy involvement raises real concerns about whether this gets the sanitized treatment that tanks biopics with critics. At $38 it's the third most expensive pick of the draft. If the Metacritic score comes in under 60 and the box office underperforms, this could be Poole's biggest regret. The upside is real — Oscar nominations for costume, makeup, and score are plausible — but $38 feels like overpaying for this level of uncertainty.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">The Devil Wears Prada 2</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $29 &bull; May 1</div></div><div class="nl-pick-grade nl-grade-b">B+</div></div><div class="nl-pick-body">222 million trailer views in 24 hours. Meryl, Hathaway, Blunt, Tucci. Tracking $55M+ domestic opening. Female 35+ demographic is underserved in Q2. Ceiling could reach $600M worldwide. Acting nominations are a real possibility. Fair value at $29.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">The Sheep Detectives</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $30</div></div>
-            <div class="nl-pick-grade nl-grade-c">C</div>
-          </div>
-          <div class="nl-pick-body">The most baffling expensive pick of the draft. $30 for a film with almost no public profile heading into Q2? This is the kind of pick that makes sense in the room and looks puzzling from the outside. If it's a breakout, Braden looks like a genius. More likely this is a $30 bet on a film that earns less than $50M worldwide and scores middling reviews. Braden's Mario pick keeps this team afloat, but the Sheep Detectives cost could be this roster's albatross.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">I Love Boosters</div><div class="nl-pick-team">Studio Six Productions (Crews)</div><div class="nl-pick-cost">Paid: $20 &bull; May 8</div></div><div class="nl-pick-grade nl-grade-c">C+</div></div><div class="nl-pick-body">SXSW reviews were good but not great — described as "won't be for everyone." That's a ceiling problem at $20. Limited box office profile and modest critical reception is the likely outcome. Crews's weakest pick by a wide margin.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Scary Movie 6</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $29</div></div>
-            <div class="nl-pick-grade nl-grade-c">C+</div>
-          </div>
-          <div class="nl-pick-body">Parody nostalgia is a real thing and the Scary Movie brand still has name recognition. But $29 is a lot for a franchise with a brutal recent track record. The Letterboxd and Metacritic ceilings for parody films are brutally low. This is a box office-only bet and even there the ceiling is modest. Worth maybe $12 in a vacuum. Aliyah overpaid.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Mortal Kombat 2</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $1 &bull; May 8</div></div><div class="nl-pick-grade nl-grade-b">B</div></div><div class="nl-pick-body">The first reboot made $83M worldwide on a modest budget. At $1, Davis gets real commercial upside for essentially nothing. Even if it only repeats those numbers, that's 83 box office points for $1. Davis's low-cost dart throws are the draft's most underrated story.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Masters of the Universe</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $23</div></div>
-            <div class="nl-pick-grade nl-grade-c">C</div>
-          </div>
-          <div class="nl-pick-body">He-Man is back and the expectations are mixed. This IP has failed on screen before. At $23 it's a speculative mid-range bet that needs both decent box office and reasonable reviews to justify the cost. The upside exists but the floor is low.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Obsession</div><div class="nl-pick-team">Studio Six Productions (Crews)</div><div class="nl-pick-cost">Paid: $10 &bull; May 15</div></div><div class="nl-pick-grade nl-grade-a">A-</div></div><div class="nl-pick-body">Biggest TIFF Midnight pickup ($15M+ to Focus Features). Critics are calling it one of the scariest films of the year. Letterboxd community is already obsessed with it. At $10 this is the sleeper steal of the draft — a horror film with genuine word-of-mouth and strong quality scoring upside.</div></div>
 
-        <div class="nl-pick-card">
-          <div class="nl-pick-header">
-            <div><div class="nl-pick-film">Supergirl</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $21</div></div>
-            <div class="nl-pick-grade nl-grade-b">B-</div>
-          </div>
-          <div class="nl-pick-body">DC reboot with IMAX support and genuine franchise momentum after Gunn's rebuilding effort. At $21 this is a reasonable bet. Not a steal, but not an overpay. If the film lands well with critics the box office could run to $400–500M worldwide.</div>
-        </div>
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">In the Grey</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $11 &bull; May 15</div></div><div class="nl-pick-grade nl-grade-c">C</div></div><div class="nl-pick-body">War/survival drama with limited public profile. At $11 it's not a disaster but it's hard to see meaningful returns across multiple scoring categories. Aliyah needed a stronger pick here.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Star Wars: Mando and Grogu</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $27 &bull; May 22</div></div><div class="nl-pick-grade nl-grade-a">A</div></div><div class="nl-pick-body">Star Wars returns to theaters after seven years. Pedro Pascal, Jon Favreau, Sigourney Weaver. No competition on May 22. One projection has it at $898M worldwide. Even a conservative $500M run is 500 box office points for $27. Davis getting this and Toy Story 5 for a combined $64 is the value story of the draft.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Backrooms</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $19 &bull; May 29</div></div><div class="nl-pick-grade nl-grade-b">B-</div></div><div class="nl-pick-body">The internet horror phenomenon gets its feature film. Massive built-in online audience. Box office ceiling is limited but Letterboxd engagement will be strong. At $19 this is a reasonable mid-range bet — Braden's second-best pick after Mario.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">The Mummy</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $5 &bull; May 29</div></div><div class="nl-pick-grade nl-grade-b">B-</div></div><div class="nl-pick-body">Lee Cronin directing a supernatural horror reimagining. Credible genre filmmaker, recognizable IP. At $5 this is smart value — low cost, modest expectations, and the potential to punch above its weight on Letterboxd. Braden's third-best pick.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Masters of the Universe</div><div class="nl-pick-team">Box Office Bandits (Poole)</div><div class="nl-pick-cost">Paid: $23 &bull; Jun 5</div></div><div class="nl-pick-grade nl-grade-c">C</div></div><div class="nl-pick-body">He-Man has failed on screen before and the IP has no recent cultural relevance. $23 feels like overpaying for that level of uncertainty. Poole's least defensible spend of the draft.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Scary Movie 6</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $29 &bull; Jun 5</div></div><div class="nl-pick-grade nl-grade-c">C</div></div><div class="nl-pick-body">The parody genre is commercially dead. Even if it opens on nostalgia, the Letterboxd and Metacritic ceilings for a Scary Movie film are brutal — 3.0 Letterboxd and 40 Metacritic at best. That's 12 combined quality points on a $29 spend. This and In the Grey are the picks that will haunt Aliyah's roster.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Disclosure Day</div><div class="nl-pick-team">Studio Six Productions (Crews)</div><div class="nl-pick-cost">Paid: $46 &bull; Jun 12</div></div><div class="nl-pick-grade nl-grade-b">B+</div></div><div class="nl-pick-body">Spielberg's UFO film, John Williams scoring, Emily Blunt leading. Box office projections at $450-550M worldwide. Real awards pedigree — if this gets the Oppenheimer treatment the nominations and wins add 30-60+ points at year-end. The risk is Spielberg's recent prestige films underperforming. The ceiling is the best of any non-blockbuster in the draft.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Toy Story 5</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $37 &bull; Jun 19</div></div><div class="nl-pick-grade nl-grade-a">A+</div></div><div class="nl-pick-body">Highest awareness tracking of any 2026 film. Tom Hanks back. Pixar coming off Hoppers outperforming expectations. Industry consensus has this crossing $1B worldwide. At $37, Davis got a film that should have cost $45+. Best pure value pick of the entire draft.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">The Sheep Detectives</div><div class="nl-pick-team">Complex Productions (Braden)</div><div class="nl-pick-cost">Paid: $30 &bull; Jun 19</div></div><div class="nl-pick-grade nl-grade-d">D+</div></div><div class="nl-pick-body">The most baffling spend of the draft. $30 for a film with almost no public profile, no significant star power, and no clear awards angle. Mario carries Braden's roster. This pick does not. If it's a surprise breakout, Braden looks like a genius. The odds of that are low enough that this grade stands.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Supergirl</div><div class="nl-pick-team">The Final Cut (Aliyah)</div><div class="nl-pick-cost">Paid: $21 &bull; Jun 26</div></div><div class="nl-pick-grade nl-grade-b">B-</div></div><div class="nl-pick-body">Milly Alcock as Kara Zor-El, Craig Gillespie directing, Jason Momoa as Lobo. IMAX release. DCU rebuilding momentum post-Superman. At $21 this is fair value. If reviews land well, $400-500M worldwide is realistic.</div></div>
+
+        <div class="nl-pick-card"><div class="nl-pick-header"><div><div class="nl-pick-film">Jackass 5</div><div class="nl-pick-team">Fuck David Zaslav Pictures (Davis)</div><div class="nl-pick-cost">Paid: $1 &bull; Jun 26</div></div><div class="nl-pick-grade nl-grade-a">A</div></div><div class="nl-pick-body">Johnny Knoxville. One dollar. Jackass Forever did $80M worldwide. Letterboxd loves this franchise unironically. No awards ceiling whatsoever, but at $1 the PPD on even a modest run is enormous. Davis picking up both Jackass 5 and Mother Mary-tier plays alongside two blockbusters is the draft strategy of the room.</div></div>
+
+        <hr class="nl-divider">
+        <h2>Draft Grades by Team</h2>
+        <p><strong>Fuck David Zaslav Pictures (Davis) — A.</strong> Best draft of the room. Toy Story 5 at $37 is the best value pick. Mando at $27 is second best. Two $1 dart throws with real upside. The only team built to dominate both Q2 and the year standings.</p>
+        <p><strong>Studio Six Productions (Crews) — B+.</strong> Disclosure Day at $46 is the biggest prestige gamble. Obsession at $10 is the sleeper steal. You Me and Tuscany at $2 is fine. I Love Boosters at $20 is the weak link. Built for awards season, not box office.</p>
+        <p><strong>Complex Productions (Braden) — B.</strong> Mario at $46 is right. The Mummy at $5 and Backrooms at $19 are solid. The Sheep Detectives at $30 is inexplicable and could cost Braden the quarter.</p>
+        <p><strong>Box Office Bandits (Poole) — C+.</strong> Mother Mary at $1 is the best PPD pick of the draft. The Drama at $21 is solid. Michael at $38 is risky. Masters of the Universe at $23 is the worst value spend on this roster.</p>
+        <p><strong>The Final Cut (Aliyah) — C+.</strong> Prada 2 at $29 is justified. Supergirl at $21 is fine. In the Grey at $11 and Scary Movie 6 at $29 are both poor value. Aliyah needed different films in those two slots.</p>
 
         <hr class="nl-divider">
         <h2>Q2 Projected Standings</h2>
-        <p>Using current box office projections and assuming average Letterboxd/Metacritic scores for each film's genre, here is the projected Q2 leaderboard before a single film opens:</p>
-
         <table class="nl-proj-table">
-          <thead><tr>
-            <th>#</th><th>Team</th><th class="r">Proj. Q2 Pts</th><th class="r">Key Driver</th>
-          </tr></thead>
+          <thead><tr><th>#</th><th>Team</th><th class="r">Proj. Q2 Pts</th><th class="r">Key Driver</th></tr></thead>
           <tbody>
             <tr class="winner"><td>1</td><td><strong>Fuck David Zaslav Pictures</strong><br><small>Davis</small></td><td class="r bold">~1,650</td><td class="r">Toy Story 5 + Mando</td></tr>
             <tr><td>2</td><td><strong>Complex Productions</strong><br><small>Braden</small></td><td class="r bold">~1,350</td><td class="r">Mario Galaxy</td></tr>
             <tr><td>3</td><td><strong>The Final Cut</strong><br><small>Aliyah</small></td><td class="r bold">~750</td><td class="r">Prada 2 + Supergirl</td></tr>
             <tr><td>4</td><td><strong>Studio Six Productions</strong><br><small>Crews</small></td><td class="r bold">~600</td><td class="r">Disclosure Day</td></tr>
-            <tr><td>5</td><td><strong>Box Office Bandits</strong><br><small>Poole</small></td><td class="r bold">~550</td><td class="r">Michael</td></tr>
+            <tr><td>5</td><td><strong>Box Office Bandits</strong><br><small>Poole</small></td><td class="r bold">~550</td><td class="r">Michael + The Drama</td></tr>
           </tbody>
         </table>
+        <p><em>Next issue: Q2 opening weekend report.</em></p>
 
-        <h2>Year-to-Date Implications</h2>
-        <p>Davis entered Q2 already leading the overall standings thanks to Hoppers, GOAT, and Send Help. If Toy Story 5 and Mando perform anywhere near projections, this team's year-to-date lead becomes nearly insurmountable by July. The only realistic threat is if <strong>Disclosure Day</strong> turns into a genuine awards machine at year-end — Crews built a team with a low Q2 ceiling but a very high Q4 ceiling.</p>
-
-        <p>The most interesting story to watch: <strong>Braden's Mario bet</strong>. At $46, it's the single highest individual spend of the quarter. If Mario runs like the original and crosses $1.3B worldwide, that's 1,300 box office points alone — enough to make Complex Productions the Q2 winner regardless of how the Sheep Detectives plays out. But if Mario tracks more like a typical animated sequel and tops out around $900M, the overpay on Sheep Detectives could cost Braden the quarter.</p>
-
-        <p><em>Next issue: Q2 opening weekend report — did the room get it right?</em></p>
-
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script>
+      </div><script>
 // ─── DATA ───────────────────────────────────────────────
 const TEAMS=[
   {id:'AC',name:'The Final Cut',owner:'AC'},
@@ -1023,6 +1009,52 @@ function addWriteIn(){
   saveAuction();
 }
 
+
+// ─── CALENDAR ────────────────────────────────────────────
+const CAL_FILMS=[
+  {title:'Super Mario Galaxy',team:'BL',date:'2026-04-01'},
+  {title:'The Drama',team:'ZP',date:'2026-04-03'},
+  {title:'You Me & Tuscany',team:'JC',date:'2026-04-10'},
+  {title:'Mother Mary',team:'ZP',date:'2026-04-17'},
+  {title:'Michael',team:'ZP',date:'2026-04-24'},
+  {title:'Devil Wears Prada 2',team:'AC',date:'2026-05-01'},
+  {title:'Mortal Kombat 2',team:'DR',date:'2026-05-08'},
+  {title:'I Love Boosters',team:'JC',date:'2026-05-08'},
+  {title:'Obsession',team:'JC',date:'2026-05-15'},
+  {title:'In the Grey',team:'AC',date:'2026-05-15'},
+  {title:'Mando & Grogu',team:'DR',date:'2026-05-22'},
+  {title:'Backrooms',team:'BL',date:'2026-05-29'},
+  {title:'The Mummy',team:'BL',date:'2026-05-29'},
+  {title:'Masters of Universe',team:'ZP',date:'2026-06-05'},
+  {title:'Scary Movie 6',team:'AC',date:'2026-06-05'},
+  {title:'Disclosure Day',team:'JC',date:'2026-06-12'},
+  {title:'Toy Story 5',team:'DR',date:'2026-06-19'},
+  {title:'Sheep Detectives',team:'BL',date:'2026-06-19'},
+  {title:'Supergirl',team:'AC',date:'2026-06-26'},
+  {title:'Jackass 5',team:'DR',date:'2026-06-26'}
+];
+function renderCalendar(){
+  const months=[{y:2026,m:3,name:'April 2026'},{y:2026,m:4,name:'May 2026'},{y:2026,m:5,name:'June 2026'}];
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today=new Date();
+  document.getElementById('cal-grid-container').innerHTML=months.map(({y,m,name})=>{
+    const firstDay=new Date(y,m,1).getDay();
+    const daysInMonth=new Date(y,m+1,0).getDate();
+    const byDay={};
+    CAL_FILMS.filter(f=>{const d=new Date(f.date);return d.getFullYear()===y&&d.getMonth()===m;})
+      .forEach(f=>{const day=new Date(f.date).getDate();if(!byDay[day])byDay[day]=[];byDay[day].push(f);});
+    const headers=dayNames.map(d=>'<div class="cal-day-header">'+d+'</div>').join('');
+    const blanks=Array(firstDay).fill('<div class="cal-day empty"></div>').join('');
+    const cells=Array.from({length:daysInMonth},(_,i)=>{
+      const day=i+1;
+      const isToday=today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===day;
+      const films=byDay[day]||[];
+      return '<div class="cal-day'+(isToday?' today':'')+'"><div class="cal-day-num">'+day+'</div>'
+        +films.map(f=>'<div class="cal-film team-'+f.team+'">'+f.title+'</div>').join('')+'</div>';
+    }).join('');
+    return '<div class="cal-month"><div class="cal-month-title">'+name+'</div><div class="cal-grid">'+headers+blanks+cells+'</div></div>';
+  }).join('');
+}
 // ─── NAV ─────────────────────────────────────────────────
 function show(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
@@ -1030,6 +1062,7 @@ function show(id,btn){
   document.getElementById(id).classList.add('on');
   btn.classList.add('active');
   if(id==='admin') renderAdmin();
+  else if(id==='calendar') renderCalendar();
   else renderLeague();
 }
 
