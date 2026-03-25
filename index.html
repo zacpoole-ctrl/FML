@@ -281,6 +281,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .quick-save-btn{background:#cc0000;border:none;border-radius:6px;color:#fff;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:10px 28px;cursor:pointer;margin-top:1rem}
 .quick-save-btn:hover{background:#aa0000}
 .save-flash{font-size:13px;color:#4a9e4a;margin-left:12px;display:none;vertical-align:middle}
+
+/* MAINTENANCE */
+#maintenance code{font-family:monospace;font-size:12px}
 </style>
 </head>
 <body>
@@ -408,6 +411,60 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   </div>
 
 </div>
+
+  <!-- MAINTENANCE -->
+  <div id="maintenance" class="sec">
+    <div style="max-width:860px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem">
+        <div>
+          <div class="page-heading" style="margin-bottom:4px">Maintenance</div>
+          <div style="font-size:12px;color:#555;letter-spacing:0.06em;text-transform:uppercase">Admin only &bull; Access via #maintenance</div>
+        </div>
+        <button class="btn-undo" onclick="runSlugCheck()" id="slug-check-btn">Run Slug Check</button>
+      </div>
+
+      <div style="background:#111;border-radius:10px;overflow:hidden;margin-bottom:1.5rem">
+        <div style="padding:12px 16px;background:#0d0d0d;border-bottom:2px solid #cc0000;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase">The Numbers Slug Registry</span>
+          <span style="font-size:11px;color:#555" id="slug-summary"></span>
+        </div>
+        <table style="width:100%;border-collapse:collapse" id="slug-table">
+          <thead><tr>
+            <th style="font-size:10px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;text-align:left;border-bottom:1px solid #1a1a1a">Film</th>
+            <th style="font-size:10px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;text-align:left;border-bottom:1px solid #1a1a1a">Quarter</th>
+            <th style="font-size:10px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;text-align:left;border-bottom:1px solid #1a1a1a">Slug</th>
+            <th style="font-size:10px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;text-align:left;border-bottom:1px solid #1a1a1a">Status</th>
+          </tr></thead>
+          <tbody id="slug-tbody"><tr><td colspan="4" style="padding:16px;color:#444;font-size:13px">Click "Run Slug Check" to test all slugs live.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div style="background:#111;border-radius:10px;overflow:hidden;margin-bottom:1.5rem">
+        <div style="padding:12px 16px;background:#0d0d0d;border-bottom:2px solid #cc0000">
+          <span style="font-size:11px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase">Known Issues</span>
+        </div>
+        <div style="padding:16px;font-size:13px;color:#aaa;line-height:1.8">
+          <p style="margin:0 0 10px"><span style="color:#cc0000;font-weight:700">The Mummy (BL, Q2)</span> — Lee Cronin's 2026 horror reimagining. Not yet indexed on The Numbers. Check <a href="https://www.the-numbers.com/search?searchterm=mummy" target="_blank" style="color:#4a9edd">the-numbers.com/search</a> closer to May release. Expected slug format: <code style="background:#1a1a1a;padding:1px 5px;border-radius:3px">Mummy-The-(2026)</code></p>
+          <p style="margin:0 0 10px"><span style="color:#cc0000;font-weight:700">Jackass 5 (DR, Q2)</span> — Not yet indexed. Check <a href="https://www.the-numbers.com/search?searchterm=jackass" target="_blank" style="color:#4a9edd">the-numbers.com/search</a> closer to June release. Expected slug: <code style="background:#1a1a1a;padding:1px 5px;border-radius:3px">Jackass-5-(2026)</code></p>
+          <p style="margin:0 0 10px"><span style="color:#e5b800;font-weight:700">The Breadwinner (DR, Q1)</span> — No Numbers page found. May be too small/limited release. Manual entry only.</p>
+          <p style="margin:0 0 10px"><span style="color:#e5b800;font-weight:700">Peaky Blinders: The Immortal Man (BL, Q1)</span> — UK/streaming release, may not appear on The Numbers. Manual entry only.</p>
+          <p style="margin:0"><span style="color:#e5b800;font-weight:700">Redux Redux (ZP, Q1)</span> — Limited release film, not indexed. Manual entry only.</p>
+        </div>
+      </div>
+
+      <div style="background:#111;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;background:#0d0d0d;border-bottom:2px solid #cc0000">
+          <span style="font-size:11px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase">Test a Slug</span>
+        </div>
+        <div style="padding:16px;display:flex;gap:8px;align-items:center">
+          <input id="slug-test-input" type="text" placeholder="e.g. Mummy-The-(2026)" style="flex:1;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;color:#e8e8e8;font-size:13px;padding:8px 12px;font-family:monospace">
+          <button class="btn-undo" onclick="testOneSlug()">Test</button>
+          <span id="slug-test-result" style="font-size:13px;min-width:120px"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="modal">
@@ -1187,6 +1244,140 @@ function addWriteIn(){
 }
 
 
+
+// ─── MAINTENANCE ─────────────────────────────────────────
+function initMaintenance(){
+  // Check hash on load and on hashchange
+  const checkHash = () => {
+    if(location.hash === '#maintenance'){
+      document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      const sec = document.getElementById('maintenance');
+      if(sec) sec.classList.add('on');
+    }
+  };
+  window.addEventListener('hashchange', checkHash);
+  checkHash();
+}
+
+const SLUG_REGISTRY = [
+  {id:1,  title:'Hoppers',                     q:'Q1', slug:'Hoppers-(2026)'},
+  {id:2,  title:'Wuthering Heights',           q:'Q1', slug:'Wuthering-Heights-(2026)'},
+  {id:3,  title:'Return to Silent Hill',       q:'Q1', slug:'Return-to-Silent-Hill-(2026)'},
+  {id:4,  title:'We Bury the Dead',            q:'Q1', slug:'We-Bury-the-Dead-(2026)'},
+  {id:5,  title:'Dracula',                     q:'Q1', slug:'Dracula-(2026)'},
+  {id:6,  title:'Peaky Blinders: The Immortal Man', q:'Q1', slug:null},
+  {id:7,  title:'Ready or Not 2',              q:'Q1', slug:'Ready-or-Not-2-(2026)'},
+  {id:8,  title:'How to Make a Killing',       q:'Q1', slug:'How-to-Make-a-Killing-(2026)'},
+  {id:9,  title:'Hoppers (DR)',                q:'Q1', slug:'Hoppers-(2026)'},
+  {id:10, title:'The Breadwinner',             q:'Q1', slug:null},
+  {id:11, title:'GOAT',                        q:'Q1', slug:'GOAT-(2026)'},
+  {id:12, title:'Send Help',                   q:'Q1', slug:'Send-Help-(2026)'},
+  {id:13, title:'Project Hail Mary',           q:'Q1', slug:'Project-Hail-Mary-(2026)'},
+  {id:14, title:'I Can Only Imagine 2',        q:'Q1', slug:'I-Can-Only-Imagine-2-(2026)'},
+  {id:15, title:'Reminders of Him',            q:'Q1', slug:'Reminders-of-Him-(2026)'},
+  {id:16, title:'Psycho Killer',               q:'Q1', slug:'Psycho-Killer-(2026)'},
+  {id:17, title:'The Bride!',                  q:'Q1', slug:'Bride-The-(2026)'},
+  {id:18, title:'Mercy',                       q:'Q1', slug:'Mercy-(2026)'},
+  {id:19, title:'Scream 7',                    q:'Q1', slug:'Scream-7-(2026)'},
+  {id:20, title:'Redux Redux',                 q:'Q1', slug:null},
+  {id:101,title:'Super Mario Galaxy Movie',    q:'Q2', slug:'Super-Mario-Galaxy-Movie-The-(2026)'},
+  {id:102,title:'The Devil Wears Prada 2',     q:'Q2', slug:'Devil-Wears-Prada-2-The-(2026)'},
+  {id:103,title:'Scary Movie 6',               q:'Q2', slug:'Scary-Movie-6-(2026)'},
+  {id:104,title:'In the Grey',                 q:'Q2', slug:'In-the-Grey-(2026)'},
+  {id:105,title:'Backrooms',                   q:'Q2', slug:'Backrooms-(2026)'},
+  {id:106,title:'The Mummy',                   q:'Q2', slug:null},
+  {id:107,title:'The Sheep Detectives',        q:'Q2', slug:'Sheep-Detectives-The-(2026)'},
+  {id:108,title:'Mando and Grogu',             q:'Q2', slug:'Mandalorian-and-Grogu-The-(2026)'},
+  {id:109,title:'Toy Story 5',                 q:'Q2', slug:'Toy-Story-5-(2026)'},
+  {id:110,title:'Mortal Kombat 2',             q:'Q2', slug:'Mortal-Kombat-II-(2026)'},
+  {id:111,title:'Jackass 5',                   q:'Q2', slug:null},
+  {id:112,title:'Disclosure Day',              q:'Q2', slug:'Disclosure-Day-(2026)'},
+  {id:113,title:'Obsession',                   q:'Q2', slug:'Obsession-(2026)'},
+  {id:114,title:'I Love Boosters',             q:'Q2', slug:'I-Love-Boosters-(2026)'},
+  {id:115,title:'You, Me and Tuscany',         q:'Q2', slug:'You-Me-and-Tuscany-(2026)'},
+  {id:116,title:'Michael',                     q:'Q2', slug:'Michael-(2026)'},
+  {id:117,title:'The Drama',                   q:'Q2', slug:'Drama-The-(2026)'},
+  {id:118,title:'Masters of the Universe',     q:'Q2', slug:'Masters-of-the-Universe-(2026)'},
+  {id:119,title:'Mother Mary',                 q:'Q2', slug:'Mother-Mary-(2025)'},
+  {id:120,title:'Supergirl',                   q:'Q2', slug:'Supergirl-(2026)'}
+];
+
+function runSlugCheck(){
+  const btn = document.getElementById('slug-check-btn');
+  const tbody = document.getElementById('slug-tbody');
+  const summary = document.getElementById('slug-summary');
+  btn.disabled = true;
+  btn.textContent = 'Checking...';
+
+  const BASE = 'https://www.the-numbers.com/movie/';
+  let done = 0;
+  const total = SLUG_REGISTRY.length;
+
+  // Render skeleton rows first
+  tbody.innerHTML = SLUG_REGISTRY.map(r =>
+    '<tr id="sr-'+r.id+'">'
+    +'<td style="padding:8px 16px;font-size:13px;color:#ccc;border-bottom:1px solid #1a1a1a">'+r.title+'</td>'
+    +'<td style="padding:8px 16px;font-size:11px;color:#555;border-bottom:1px solid #1a1a1a">'+r.q+'</td>'
+    +'<td style="padding:8px 16px;font-size:12px;font-family:monospace;color:#888;border-bottom:1px solid #1a1a1a">'+(r.slug||'<span style="color:#cc0000">— no slug —</span>')+'</td>'
+    +'<td style="padding:8px 16px;font-size:12px;border-bottom:1px solid #1a1a1a" id="sr-status-'+r.id+'">'+(r.slug?'<span style="color:#555">testing...</span>':'<span style="color:#cc0000">&#10007; No slug mapped</span>')+'</td>'
+    +'</tr>'
+  ).join('');
+
+  // Test each slug that has one
+  const testable = SLUG_REGISTRY.filter(r => r.slug);
+  Promise.all(testable.map(r =>
+    fetch(BASE + r.slug)
+      .then(resp => {
+        const cell = document.getElementById('sr-status-'+r.id);
+        if(resp.ok){
+          cell.innerHTML = '<span style="color:#4a9e4a">&#10003; 200 OK</span>';
+        } else {
+          cell.innerHTML = '<span style="color:#cc0000">&#10007; '+resp.status+' — slug may be wrong</span>';
+        }
+        done++;
+        summary.textContent = done + '/' + total + ' checked';
+      })
+      .catch(() => {
+        document.getElementById('sr-status-'+r.id).innerHTML = '<span style="color:#e87a30">&#9888; Network error</span>';
+        done++;
+      })
+  )).then(() => {
+    btn.disabled = false;
+    btn.textContent = 'Run Slug Check';
+    const ok = tbody.querySelectorAll('[style*="4a9e4a"]').length;
+    const fail = tbody.querySelectorAll('[style*="cc0000"]').length;
+    summary.innerHTML = '<span style="color:#4a9e4a">'+ok+' OK</span> &nbsp; <span style="color:#cc0000">'+fail+' issues</span>';
+  });
+}
+
+function testOneSlug(){
+  const input = document.getElementById('slug-test-input');
+  const result = document.getElementById('slug-test-result');
+  const slug = input.value.trim();
+  if(!slug){ result.textContent = 'Enter a slug first'; return; }
+  result.style.color = '#555';
+  result.textContent = 'Testing...';
+  fetch('https://www.the-numbers.com/movie/' + slug)
+    .then(r => r.text())
+    .then(html => {
+      const m = html.match(/Worldwide Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
+      const d = html.match(/Domestic Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
+      if(m || d){
+        const gross = m ? '$'+m[1]+' WW' : '$'+d[1]+' DOM';
+        result.style.color = '#4a9e4a';
+        result.textContent = '✓ Found: ' + gross;
+      } else {
+        result.style.color = '#e87a30';
+        result.textContent = '200 OK but no gross data yet';
+      }
+    })
+    .catch(() => {
+      result.style.color = '#cc0000';
+      result.textContent = '✗ Not found or blocked';
+    });
+}
+
 // ─── CALENDAR ────────────────────────────────────────────
 const CAL_FILMS=[
   {title:'Super Mario Galaxy',team:'BL',date:'2026-04-01'},
@@ -1266,6 +1457,7 @@ renderNomTracker();
 renderTotalBudget();
 renderMinBidHint();
 renderLeague();
+initMaintenance();
 </script>
 </body>
 </html>
