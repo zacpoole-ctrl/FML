@@ -834,25 +834,17 @@ function refreshBoxOffice(){
     120: 'Mother-Mary-(2025)'
   };
 
-  const BASE = 'https://www.the-numbers.com/movie/';
+  const BASE = 'https://fml-box-office-proxy.bradenladner.workers.dev/?slug=';
   const allFilms = lfAll();
   const fetchable = allFilms.filter(f => TN_SLUGS[f.id]);
   let done = 0;
   let updated = 0;
 
-  const parseGross = html => {
-    const m = html.match(/Worldwide Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
-    if(m) return parseFloat(m[1].replace(/,/g,'')) / 1000000;
-    const d = html.match(/Domestic Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
-    if(d) return parseFloat(d[1].replace(/,/g,'')) / 1000000;
-    return null;
-  };
-
   Promise.all(fetchable.map(f =>
-    fetch(BASE + TN_SLUGS[f.id])
-      .then(r => r.text())
-      .then(html => {
-        const gross = parseGross(html);
+    fetch(BASE + encodeURIComponent(TN_SLUGS[f.id]))
+      .then(r => r.json())
+      .then(data => {
+        const gross = data.gross;
         if(gross !== null && gross > 0){
           const inp = document.querySelector('.qi[data-id="'+f.id+'"]');
           if(inp){ inp.value = gross.toFixed(3); inp.style.background='#0f2a0f'; }
