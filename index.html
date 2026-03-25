@@ -1310,7 +1310,7 @@ function runSlugCheck(){
   btn.disabled = true;
   btn.textContent = 'Checking...';
 
-  const BASE = 'https://www.the-numbers.com/movie/';
+  const BASE = 'https://fml-box-office-proxy.bradenladner.workers.dev/?slug=';
   let done = 0;
   const total = SLUG_REGISTRY.length;
 
@@ -1328,12 +1328,17 @@ function runSlugCheck(){
   const testable = SLUG_REGISTRY.filter(r => r.slug);
   Promise.all(testable.map(r =>
     fetch(BASE + r.slug)
-      .then(resp => {
+      .then(res => res.json())
+      .then(data => {
         const cell = document.getElementById('sr-status-'+r.id);
-        if(resp.ok){
-          cell.innerHTML = '<span style="color:#4a9e4a">&#10003; 200 OK</span>';
+        if(data.gross !== undefined && data.gross !== null){
+          cell.innerHTML = '<span style="color:#4a9e4a">&#10003; $'+data.gross.toFixed(1)+'M</span>';
+        } else if(data.error && data.error.includes('503')){
+          cell.innerHTML = '<span style="color:#cc0000">&#10007; 503 — not indexed yet</span>';
+        } else if(data.error){
+          cell.innerHTML = '<span style="color:#e87a30">&#9888; '+data.error+'</span>';
         } else {
-          cell.innerHTML = '<span style="color:#cc0000">&#10007; '+resp.status+' — slug may be wrong</span>';
+          cell.innerHTML = '<span style="color:#e87a30">&#9888; No gross data yet</span>';
         }
         done++;
         summary.textContent = done + '/' + total + ' checked';
@@ -1358,23 +1363,23 @@ function testOneSlug(){
   if(!slug){ result.textContent = 'Enter a slug first'; return; }
   result.style.color = '#555';
   result.textContent = 'Testing...';
-  fetch('https://www.the-numbers.com/movie/' + slug)
-    .then(r => r.text())
-    .then(html => {
-      const m = html.match(/Worldwide Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
-      const d = html.match(/Domestic Box Office<\/b><\/td>\s*<td[^>]*>\$([\d,]+)/);
-      if(m || d){
-        const gross = m ? '$'+m[1]+' WW' : '$'+d[1]+' DOM';
+  fetch('https://fml-box-office-proxy.bradenladner.workers.dev/?slug=' + slug)
+    .then(r => r.json())
+    .then(data => {
+      if(data.gross !== null && data.gross !== undefined){
         result.style.color = '#4a9e4a';
-        result.textContent = '✓ Found: ' + gross;
+        result.textContent = '✓ $' + data.gross.toFixed(2) + 'M WW';
+      } else if(data.error){
+        result.style.color = '#cc0000';
+        result.textContent = '✗ ' + data.error;
       } else {
         result.style.color = '#e87a30';
-        result.textContent = '200 OK but no gross data yet';
+        result.textContent = 'No gross data yet';
       }
     })
     .catch(() => {
       result.style.color = '#cc0000';
-      result.textContent = '✗ Not found or blocked';
+      result.textContent = '✗ Request failed';
     });
 }
 
