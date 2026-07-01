@@ -229,6 +229,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .team-tile.high{border-color:#f5c400;background:#1f1800;box-shadow:0 0 14px rgba(245,196,0,0.28)}
 .team-tile:disabled{opacity:0.3;cursor:default;pointer-events:none}
 .tt-name{font-size:13px;font-weight:700;color:#e8e8e8;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center}
+.tt-abbr{display:inline-block;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:19px;letter-spacing:0.06em;color:#5ab0ef;line-height:1;margin-bottom:3px}
+.team-tile.high .tt-abbr{color:#f5c400}
+.bc-abbr{display:inline-block;min-width:24px;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:15px;letter-spacing:0.04em;color:#5ab0ef;margin-right:7px}
 .tt-rem{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:27px;color:#f5c400;margin-top:5px;line-height:1}
 .tt-max{font-size:9px;color:#8a8a8a;letter-spacing:0.04em;text-transform:uppercase;margin-top:3px}
 .tt-high-flag{font-size:9px;color:#f5c400;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;min-height:11px}
@@ -1196,7 +1199,7 @@ function renderCurrentBid(){
     ta.style.display='none';
   } else {
     const t=TEAMS.find(x=>x.id===aHighBid.teamId);
-    tn.className='cb-team'; tn.textContent=t.name;
+    tn.className='cb-team'; tn.textContent=t.owner+' \u2014 '+t.name;
     ta.style.display='block'; ta.textContent='$'+aHighBid.amount;
   }
   renderMinBidHint();
@@ -1223,6 +1226,7 @@ function renderTeamTiles(){
     const cantAfford=rem<need;
     const dis=full||cantAfford||isHigh;
     return '<button class="team-tile'+(isHigh?' high':'')+'" '+(dis?'disabled':'')+' onclick="assignBid(\''+t.id+'\')">'
+      +'<div class="tt-abbr">'+t.owner+'</div>'
       +'<div class="tt-name">'+t.name+'</div>'
       +'<div class="tt-rem">$'+rem+'</div>'
       +'<div class="tt-max">'+(full?'roster full':'max $'+Math.max(0,mx))+'</div>'
@@ -1260,6 +1264,7 @@ function renderBudgets(){
     const low=rem<20,done=cnt>=MAX_PICKS;
     const mx=aMaxBid(t.id);
     return '<div class="bud-compact'+(done?' done':'')+'">'
+      +'<span class="bc-abbr">'+t.owner+'</span>'
       +'<span class="bc-name">'+t.name+'</span>'
       +'<span class="bc-rem'+(low&&!done?' low':'')+'">$'+rem+'</span>'
       +(done?'<span class="bc-done">DONE</span>':'<span class="bc-meta">'+(MAX_PICKS-cnt)+' left \u00b7 max $'+Math.max(0,mx)+'</span>')
@@ -1278,7 +1283,7 @@ function renderNomTracker(){
     +TEAMS.map(t=>{
       const used=nomCount(t.id);
       const isActive=t.id===activeId;
-      return '<div class="nom-row"><span class="nom-team'+(isActive?' active-nom':'')+'">'+t.name+(isActive?' \u25B6':'')+'</span>'
+      return '<div class="nom-row"><span class="nom-team'+(isActive?' active-nom':'')+'"><b style="color:#5ab0ef;font-weight:700">'+t.owner+'</b> '+t.name+(isActive?' \u25B6':'')+'</span>'
         +'<div class="nom-dots">'+Array.from({length:MAX_PICKS},(_,i)=>'<div class="nom-dot'+(i<used?' used':(isActive&&i===used?' active':''))+'"></div>').join('')+'</div></div>';
     }).join('');
 }
@@ -1314,7 +1319,7 @@ function renderLog(){
     const t=TEAMS.find(x=>x.id===p.teamId);
     const nom=p.nominatedBy?TEAMS.find(x=>x.id===p.nominatedBy):null;
     const nomTag=(nom&&nom.id!==p.teamId)?' <span style="color:#555">(nom: '+nom.owner+')</span>':'';
-    return '<div class="log-entry editable" onclick="startEditPick('+idx+')"><div><div class="le-film">'+p.filmTitle+'</div><div class="le-team">'+t.name+nomTag+'</div></div><div class="le-cost">$'+p.cost+'</div></div>';
+    return '<div class="log-entry editable" onclick="startEditPick('+idx+')"><div><div class="le-film">'+p.filmTitle+'</div><div class="le-team"><b style="color:#5ab0ef">'+t.owner+'</b> '+t.name+nomTag+'</div></div><div class="le-cost">$'+p.cost+'</div></div>';
   }).join('');
 }
 function startEditPick(idx){ editingPickIdx=idx; editTeamId=aPicks[idx].teamId; renderLog(); }
