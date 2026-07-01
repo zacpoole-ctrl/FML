@@ -81,11 +81,12 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .notice{font-size:12px;color:#4a9e4a;margin-top:6px;display:none;text-align:center}
 
 /* AUCTION */
-.auction-layout{display:grid;grid-template-columns:1fr 300px;gap:14px}
-.ap{background:#111;border-top:3px solid #cc0000;border-radius:8px;padding:1.25rem;margin-bottom:12px}
+.auction-layout{display:grid;grid-template-columns:1fr 316px;gap:14px}
+#auction-heading{font-size:32px}
+.ap{background:#111;border-top:3px solid #cc0000;border-radius:8px;padding:1rem 1.1rem;margin-bottom:10px}
 .ap:last-child{margin-bottom:0}
 .ap-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:18px;letter-spacing:0.1em;color:#f5c400;margin-bottom:1rem}
-.film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:6px;max-height:300px;overflow-y:auto;margin-bottom:1rem}
+.film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;max-height:188px;overflow-y:auto;margin-bottom:0.25rem}
 .fbtn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;padding:8px 10px;cursor:pointer;text-align:left;width:100%;transition:border-color 0.1s}
 .fbtn:hover{border-color:#cc0000}
 .fbtn.active{border-color:#f5c400;background:#1a1400}
@@ -97,16 +98,16 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .wi-row input{flex:1;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:5px;color:#e8e8e8;font-size:13px;padding:6px 10px}
 .wi-row button{background:#1a1a1a;border:1px solid #cc0000;border-radius:5px;color:#cc0000;font-size:12px;font-weight:700;padding:6px 12px;cursor:pointer;white-space:nowrap;text-transform:uppercase;letter-spacing:0.05em}
 .wi-row button:hover{background:#cc0000;color:#fff}
-.on-deck{background:#0d0d0d;border:2px solid #cc0000;border-radius:8px;padding:1.25rem;margin-bottom:1rem}
-.od-label{font-size:10px;font-weight:700;color:#cc0000;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
-.od-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:26px;letter-spacing:0.06em;color:#fff;margin-bottom:1.25rem;min-height:32px;line-height:1.1}
-.no-film{font-size:14px;color:#333;font-style:italic;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
-.current-bid-box{display:flex;align-items:center;justify-content:space-between;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:6px;padding:0.875rem 1rem;margin-bottom:1rem}
+.on-deck{background:#0d0d0d;border:2px solid #cc0000;border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1rem;box-shadow:0 0 0 1px rgba(204,0,0,0.12)}
+.od-label{font-size:10px;font-weight:700;color:#e8623a;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px}
+.od-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:38px;letter-spacing:0.05em;color:#fff;margin-bottom:0.9rem;min-height:42px;line-height:1.05}
+.no-film{font-size:15px;color:#555;font-style:italic;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
+.current-bid-box{display:flex;align-items:center;justify-content:space-between;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1rem}
 .cb-left{display:flex;flex-direction:column}
-.cb-label{font-size:10px;font-weight:700;color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px}
-.cb-team{font-size:14px;font-weight:600;color:#4a9edd}
-.cb-amount{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:34px;color:#f5c400;line-height:1}
-.cb-none{font-size:13px;color:#333;font-style:italic}
+.cb-label{font-size:11px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
+.cb-team{font-size:18px;font-weight:700;color:#5ab0ef}
+.cb-amount{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:56px;color:#f5c400;line-height:0.95;margin-top:2px}
+.cb-none{font-size:15px;color:#666;font-style:italic}
 .timer-box{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px}
 .timer-num{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:48px;color:#333;line-height:1;transition:color 0.3s}
 .timer-num.urgent{color:#f5c400;animation:pulse 0.5s infinite alternate}
@@ -129,18 +130,18 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .btn-undo:hover{background:#2a2a2a;color:#ccc}
 .btn-undo:disabled{opacity:0.3;cursor:default;pointer-events:none}
 .auction-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.budget-card{background:#1a1a1a;border-left:3px solid #cc0000;border-radius:6px;padding:0.875rem 1rem;margin-bottom:8px}
+.budget-card{background:#1a1a1a;border-left:3px solid #cc0000;border-radius:6px;padding:0.7rem 0.85rem;margin-bottom:6px}
 .budget-card:last-child{margin-bottom:0}
 .bud-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .bud-name{font-size:13px;font-weight:600;color:#e8e8e8}
-.bud-left{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:18px;color:#f5c400}
+.bud-left{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:23px;color:#f5c400}
 .bud-left.low{color:#cc0000}
 .bar-bg{height:3px;background:#2a2a2a;border-radius:2px;margin-bottom:7px}
 .bar-fill{height:3px;background:#f5c400;border-radius:2px;transition:width 0.3s}
 .bar-fill.low{background:#cc0000}
 .pick-item{display:flex;justify-content:space-between;font-size:11px;color:#888;padding:2px 0}
 .pick-item span:last-child{color:#f5c400;font-weight:700}
-.picks-left{font-size:10px;color:#444;margin-top:3px}
+.picks-left{font-size:10px;color:#7a7a7a;margin-top:3px}
 .done-badge{font-size:10px;background:#1a3a1a;color:#4a9e4a;padding:2px 8px;border-radius:3px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
 .log-entry{font-size:12px;padding:7px 0;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center}
 .log-entry:last-child{border-bottom:none}
@@ -165,11 +166,11 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 /* TOTAL BUDGET BAR */
 .total-budget-bar{background:#1a1a1a;border-radius:6px;padding:0.875rem 1rem;margin-bottom:12px}
 .tb-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.tb-label span:first-child{font-size:11px;font-weight:700;color:#555;letter-spacing:0.08em;text-transform:uppercase}
+.tb-label span:first-child{font-size:11px;font-weight:700;color:#8a8a8a;letter-spacing:0.08em;text-transform:uppercase}
 .tb-label span:last-child{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:16px;color:#f5c400}
 .tb-bg{height:6px;background:#2a2a2a;border-radius:3px}
 .tb-fill{height:6px;background:#cc0000;border-radius:3px;transition:width 0.4s}
-.tb-sub{font-size:10px;color:#555;margin-top:4px;text-align:right}
+.tb-sub{font-size:10px;color:#7a7a7a;margin-top:4px;text-align:right}
 
 /* MIN BID HINT */
 .min-bid-hint{font-size:11px;color:#888;margin-top:6px;min-height:16px}
@@ -203,7 +204,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 /* Film search / typeahead */
 .block-search{position:relative;margin-bottom:1rem}
-.block-search input{width:100%;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:6px;color:#e8e8e8;font-size:14px;padding:10px 12px}
+.block-search input{width:100%;background:#0a0a0a;border:1px solid #3a3a3a;border-radius:6px;color:#e8e8e8;font-size:15px;padding:11px 13px}
 .block-search input:focus{border-color:#cc0000;outline:none}
 .bs-results{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#161616;border:1px solid #2a2a2a;border-radius:6px;max-height:240px;overflow-y:auto;z-index:5;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
 .bs-item{padding:9px 12px;font-size:13px;color:#e8e8e8;cursor:pointer;border-bottom:1px solid #1f1f1f}
@@ -214,7 +215,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 /* Block bid entry */
 .bid-amount-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .bid-amount-wrap .dollar{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:34px;color:#555}
-.bid-amount-display{width:120px;background:#0a0a0a;border:2px solid #2a2a2a;border-radius:8px;color:#f5c400;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:40px;text-align:center;padding:2px 8px}
+.bid-amount-display{width:128px;background:#0a0a0a;border:2px solid #3a3a3a;border-radius:8px;color:#f5c400;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:44px;text-align:center;padding:2px 8px}
 .bid-amount-display:focus{border-color:#f5c400;outline:none}
 .bump-chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{background:#1a1a1a;border:1px solid #3a3a3a;border-radius:6px;color:#bbb;font-size:13px;font-weight:700;padding:8px 12px;cursor:pointer;min-width:44px}
@@ -223,14 +224,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 /* Team tiles */
 .team-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin:12px 0}
-.team-tile{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:8px;padding:10px 8px;cursor:pointer;text-align:center;transition:border-color 0.1s,background 0.1s}
+.team-tile{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:8px;padding:12px 8px 10px;cursor:pointer;text-align:center;transition:border-color 0.1s,background 0.1s,box-shadow 0.1s}
 .team-tile:hover{border-color:#4a9edd;background:#10161c}
-.team-tile.high{border-color:#f5c400;background:#1a1400}
-.team-tile:disabled{opacity:0.32;cursor:default;pointer-events:none}
-.tt-name{font-size:12px;font-weight:700;color:#e8e8e8;line-height:1.2;min-height:29px;display:flex;align-items:center;justify-content:center}
-.tt-rem{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:20px;color:#f5c400;margin-top:4px;line-height:1}
-.tt-max{font-size:9px;color:#777;letter-spacing:0.04em;text-transform:uppercase;margin-top:2px}
-.tt-high-flag{font-size:9px;color:#f5c400;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:3px;min-height:11px}
+.team-tile.high{border-color:#f5c400;background:#1f1800;box-shadow:0 0 14px rgba(245,196,0,0.28)}
+.team-tile:disabled{opacity:0.3;cursor:default;pointer-events:none}
+.tt-name{font-size:13px;font-weight:700;color:#e8e8e8;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center}
+.tt-rem{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:27px;color:#f5c400;margin-top:5px;line-height:1}
+.tt-max{font-size:9px;color:#8a8a8a;letter-spacing:0.04em;text-transform:uppercase;margin-top:3px}
+.tt-high-flag{font-size:9px;color:#f5c400;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;min-height:11px}
 
 /* Sell / clear row */
 .sell-row{display:flex;gap:8px;align-items:center;margin-top:6px}
@@ -258,6 +259,40 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .le-void{background:#1a1a1a;border:1px solid #cc0000;border-radius:5px;color:#cc0000;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer;text-transform:uppercase}
 .le-cancel{background:#1a1a1a;border:1px solid #3a3a3a;border-radius:5px;color:#777;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer;text-transform:uppercase}
 .log-hint{font-size:10px;color:#555;margin-bottom:6px;font-style:italic}
+
+/* SCREENSHARE COMPACT */
+#auction .nom-tracker{padding:0.7rem 0.85rem;margin-bottom:10px}
+#auction .nom-tracker-title{font-size:15px;margin-bottom:6px}
+#auction .nom-row{padding:3px 0}
+#auction .total-budget-bar{padding:0.7rem 0.85rem;margin-bottom:10px}
+#log{max-height:200px;overflow-y:auto}
+.films-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.films-toggle:hover .ft-chev{color:#999}
+.ft-chev{color:#555;font-size:14px;transition:transform 0.2s}
+.ft-chev.open{transform:rotate(90deg)}
+.bud-compact{display:flex;align-items:center;gap:10px;background:#1a1a1a;border-left:3px solid #cc0000;border-radius:6px;padding:7px 10px;margin-bottom:5px}
+.bud-compact:last-child{margin-bottom:0}
+.bud-compact.done{border-left-color:#2e6e2e}
+.bc-name{font-size:12px;font-weight:600;color:#e8e8e8;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-rem{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:23px;color:#f5c400;min-width:42px;text-align:right;line-height:1}
+.bc-rem.low{color:#cc0000}
+.bc-meta{font-size:9px;color:#8a8a8a;min-width:76px;text-align:right;text-transform:uppercase;letter-spacing:0.03em}
+.bc-done{font-size:10px;color:#4a9e4a;font-weight:700;min-width:76px;text-align:right;text-transform:uppercase;letter-spacing:0.05em}
+
+/* FILM DETAIL HOVER CARD */
+#film-hover{position:fixed;z-index:200;width:296px;background:#0d0d0d;border:1px solid #3a3a3a;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.75);display:none;overflow:hidden;pointer-events:none}
+.fh-body{display:flex;gap:11px;padding:12px}
+#film-hover img{width:78px;height:117px;object-fit:cover;border-radius:6px;background:#1a1a1a;flex-shrink:0}
+.fh-txt{min-width:0}
+.fh-title{font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;font-size:19px;color:#fff;letter-spacing:0.03em;line-height:1.05}
+.fh-year{font-size:11px;color:#8a8a8a;margin:2px 0 6px}
+.fh-meta{font-size:11px;color:#c4c4c4;line-height:1.45;margin-bottom:2px}
+.fh-meta b{color:#f5c400;font-weight:600}
+.fh-overview{font-size:11px;color:#9a9a9a;line-height:1.45;padding:0 12px 12px;max-height:92px;overflow:hidden}
+.fh-empty{padding:14px;font-size:12px;color:#777;font-style:italic;line-height:1.4}
+.pe-fetch{background:#0f2a3a;border:1px solid #2e6a8e;border-radius:5px;color:#5ab0ef;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:0.04em}
+.pe-fetch:hover{background:#12384f}
+.pe-fetch:disabled{opacity:0.5;cursor:default}
 
 /* LEAGUE COMBINED VIEW */
 .league-card{background:#111;border-radius:10px;margin-bottom:14px;overflow:hidden;border-top:4px solid #cc0000}
@@ -406,7 +441,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   <!-- AUCTION -->
   <div id="auction" class="sec">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px">
-      <div class="page-heading" id="auction-heading" style="margin-bottom:0">Q2 2026 Auction Draft</div>
+      <div class="page-heading" id="auction-heading" style="margin-bottom:0">Q3 2026 Auction Draft</div>
       <div style="display:flex;gap:6px">
         <button class="a-btn" id="undo-btn" onclick="undoLast()" disabled>&#8592; Undo</button>
         <button class="a-btn gold" id="pool-toggle" onclick="togglePoolEditor()">Manage Pool</button>
@@ -473,8 +508,13 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
         <!-- Remaining films -->
         <div class="ap">
-          <div class="ap-title" style="margin-bottom:0.75rem">Available Films</div>
-          <div class="film-grid" id="film-grid"></div>
+          <div class="films-toggle" onclick="toggleFilmGrid()">
+            <div class="ap-title" style="margin-bottom:0">Available Films</div>
+            <span class="ft-chev" id="fg-chev">&#9654;</span>
+          </div>
+          <div id="film-grid-wrap" style="display:none;margin-top:0.75rem">
+            <div class="film-grid" id="film-grid"></div>
+          </div>
         </div>
       </div>
 
@@ -681,6 +721,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     </div>
   </div>
 
+<div id="film-hover"></div>
 <script>
 // DATA
 const TEAMS=[
@@ -991,15 +1032,15 @@ const MAX_PICKS=4;
 
 // Seed pool used on first load only; after that the pool is editable + persisted.
 const DEFAULT_POOL=[
-  'Super Mario Galaxy Movie','Disclosure Day','Michael','Star Wars: Mando and Grogu',
-  'Toy Story 5','The Devil Wears Prada 2','Scary Movie 6','Supergirl','Jackass 5',
-  'You, Me and Tuscany','Over Your Dead Body','I Love Boosters','Passengers',
-  'In the Grey','The Drama','The Mummy','Obsession','Backrooms',
-  'The Sheep Detectives','Mother Mary','Erupcja'
+  'Minions & Monsters','Young Washington','The Odyssey','Enola Holmes 3',
+  'Motor City','Evil Dead Burn','Spider-Man: Brand New Day','Coyote vs. Acme',
+  'PAW Patrol: The Dino Movie','Flowervale Street','Insidious: Out of the Further',
+  'Fall 2','Mutiny','How to Rob a Bank','Clayface','Runner','Practical Magic 2',
+  'Resident Evil','By Any Means','Forgotten Island','Charlie Harper'
 ];
 
 // AUCTION STATE
-let aQuarterLabel='Q2 2026';
+let aQuarterLabel='Q3 2026';
 let aPool=[];            // [{id,title,sold}]
 let aPicks=[];           // [{filmId,filmTitle,teamId,cost,nominatedBy}]
 let aHistory=[];         // JSON snapshots for undo
@@ -1009,6 +1050,65 @@ let aHighBid=null;       // {teamId,amount}
 let aTimer=null, aTimerSecs=0, aGoing=false;
 let poolEditorOpen=false;
 let editingPickIdx=null, editTeamId=null;
+let filmGridOpen=false;
+
+// TMDB film details (fetched once, cached in localStorage; read offline during the draft)
+// After deploying your TMDB worker, set this URL (see setup notes).
+const TMDB_PROXY='https://fml-tmdb-proxy.bradenladner.workers.dev/';
+let tmdbCache={};
+function loadTmdb(){ try{ tmdbCache=JSON.parse(localStorage.getItem('fml_tmdb')||'{}')||{}; }catch(e){ tmdbCache={}; } }
+function saveTmdb(){ localStorage.setItem('fml_tmdb', JSON.stringify(tmdbCache)); }
+function tmdbKey(title){ return (title||'').trim().toLowerCase(); }
+function tmdbGet(title){ return tmdbCache[tmdbKey(title)]||null; }
+function fetchAllDetails(){
+  const btn=document.getElementById('pe-fetch-btn');
+  const status=document.getElementById('pe-fetch-status');
+  const todo=aPool.filter(f=>!tmdbGet(f.title));
+  if(!todo.length){ if(status) status.textContent='All films already have details cached.'; return; }
+  if(btn){ btn.disabled=true; btn.textContent='Fetching...'; }
+  let done=0, ok=0;
+  Promise.all(todo.map(f=>
+    fetch(TMDB_PROXY+'?title='+encodeURIComponent(f.title))
+      .then(r=>r.json())
+      .then(d=>{ if(d && !d.error){ tmdbCache[tmdbKey(f.title)]=d; ok++; } done++; if(status) status.textContent='Fetching... '+done+'/'+todo.length; })
+      .catch(()=>{ done++; })
+  )).then(()=>{
+    saveTmdb();
+    if(btn){ btn.disabled=false; btn.textContent='Fetch film details'; }
+    if(status) status.textContent=ok+' of '+todo.length+' fetched \u2014 hover any film to see its card.';
+    renderFilmGrid();
+  });
+}
+function filmHover(ev,id){
+  const f=aPool.find(x=>x.id===id); if(!f) return;
+  const card=document.getElementById('film-hover');
+  const d=tmdbGet(f.title);
+  if(d){
+    const poster=d.poster?('<img src="'+d.poster+'" alt="">'):'';
+    const dir=d.director?'<div class="fh-meta"><b>Dir</b> '+d.director+'</div>':'';
+    const cast=(d.cast&&d.cast.length)?'<div class="fh-meta"><b>Cast</b> '+d.cast.slice(0,3).join(', ')+'</div>':'';
+    const rel=d.release_date?'<div class="fh-meta"><b>Out</b> '+d.release_date+'</div>':'';
+    card.innerHTML='<div class="fh-body">'+poster+'<div class="fh-txt"><div class="fh-title">'+(d.title||f.title)+'</div>'
+      +'<div class="fh-year">'+(d.year||'')+'</div>'+dir+cast+rel+'</div></div>'
+      +(d.overview?'<div class="fh-overview">'+d.overview+'</div>':'');
+  } else {
+    card.innerHTML='<div class="fh-empty">No details cached yet.<br>Manage Pool \u2192 Fetch film details.</div>';
+  }
+  card.style.display='block';
+  positionHover(ev);
+}
+function positionHover(ev){
+  const card=document.getElementById('film-hover');
+  if(card.style.display!=='block') return;
+  const pad=14, w=card.offsetWidth||296, h=card.offsetHeight||160;
+  let x=ev.clientX+pad, y=ev.clientY+pad;
+  if(x+w>window.innerWidth-8) x=ev.clientX-w-pad;
+  if(x<8) x=8;
+  if(y+h>window.innerHeight-8) y=window.innerHeight-h-8;
+  if(y<8) y=8;
+  card.style.left=x+'px'; card.style.top=y+'px';
+}
+function hideFilmHover(){ const c=document.getElementById('film-hover'); if(c) c.style.display='none'; }
 
 const NOM_ORDER = Array.from({length:MAX_PICKS}, ()=>TEAMS.map(t=>t.id)).flat();
 
@@ -1138,28 +1238,31 @@ function renderFilmGrid(){
     el.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:#555;font-style:italic">Pool is empty \u2014 use Manage Pool to add films.</div>';
     return;
   }
-  el.innerHTML=aPool.map(f=>
-    '<button class="fbtn'+(f.sold?' sold':'')+(aBlockId===f.id?' active':'')+'" '+(f.sold?'disabled':'')+' onclick="putOnBlock('+f.id+')">'
-    +'<div class="ft">'+f.title+'</div>'
-    +(f.sold?'<div class="fmeta">Sold</div>':'')
-    +'</button>'
-  ).join('');
+  el.innerHTML=aPool.map(f=>{
+    const hasInfo=!!tmdbGet(f.title);
+    return '<button class="fbtn'+(f.sold?' sold':'')+(aBlockId===f.id?' active':'')+'" '+(f.sold?'disabled':'')
+      +' onclick="putOnBlock('+f.id+')" onmouseenter="filmHover(event,'+f.id+')" onmousemove="positionHover(event)" onmouseleave="hideFilmHover()">'
+      +'<div class="ft">'+f.title+(hasInfo?' <span style="color:#5ab0ef">&#9432;</span>':'')+'</div>'
+      +(f.sold?'<div class="fmeta">Sold</div>':'')
+      +'</button>';
+  }).join('');
+}
+function toggleFilmGrid(){
+  filmGridOpen=!filmGridOpen;
+  document.getElementById('film-grid-wrap').style.display=filmGridOpen?'block':'none';
+  const c=document.getElementById('fg-chev'); if(c) c.classList.toggle('open',filmGridOpen);
 }
 
-// BUDGETS
+// BUDGETS (compact, one row per team)
 function renderBudgets(){
   document.getElementById('budgets').innerHTML=TEAMS.map(t=>{
     const rem=aRemaining(t.id),cnt=aCount(t.id);
-    const pct=Math.max(0,(rem/BUDGET)*100),low=rem<20,done=cnt>=MAX_PICKS;
+    const low=rem<20,done=cnt>=MAX_PICKS;
     const mx=aMaxBid(t.id);
-    const myPicks=aPicks.filter(p=>p.teamId===t.id);
-    return '<div class="budget-card">'
-      +'<div class="bud-top"><span class="bud-name">'+t.name+'</span>'
-      +(done?'<span class="done-badge">DONE</span>':'<span class="bud-left'+(low?' low':'')+'">$'+rem+'</span>')
-      +'</div>'
-      +'<div class="bar-bg"><div class="bar-fill'+(low?' low':'')+'" style="width:'+pct+'%"></div></div>'
-      +myPicks.map(p=>'<div class="pick-item"><span>'+p.filmTitle+'</span><span>$'+p.cost+'</span></div>').join('')
-      +(!done?'<div class="picks-left">'+(MAX_PICKS-cnt)+' left \u00b7 max bid $'+Math.max(0,mx)+'</div>':'')
+    return '<div class="bud-compact'+(done?' done':'')+'">'
+      +'<span class="bc-name">'+t.name+'</span>'
+      +'<span class="bc-rem'+(low&&!done?' low':'')+'">$'+rem+'</span>'
+      +(done?'<span class="bc-done">DONE</span>':'<span class="bc-meta">'+(MAX_PICKS-cnt)+' left \u00b7 max $'+Math.max(0,mx)+'</span>')
       +'</div>';
   }).join('');
 }
@@ -1394,7 +1497,12 @@ function renderPoolEditor(){
     +'onkeydown="if(event.key===\'Enter\')addPoolFilm()"><button onclick="addPoolFilm()">+ Add</button></div>'
     +'<div class="pe-bulk"><div class="pe-bulk-label">Bulk replace \u2014 paste one film per line</div>'
     +'<textarea id="pe-bulk-input" placeholder="Paste the new quarter\u2019s films here, one per line..."></textarea>'
-    +'<button onclick="bulkReplacePool()">Replace entire pool</button></div>';
+    +'<button onclick="bulkReplacePool()">Replace entire pool</button></div>'
+    +'<div style="margin-top:12px;border-top:1px solid #222;padding-top:12px">'
+    +'<button class="pe-fetch" id="pe-fetch-btn" onclick="fetchAllDetails()">Fetch film details</button>'
+    +'<span id="pe-fetch-status" style="font-size:11px;color:#888;margin-left:10px"></span>'
+    +'<div style="font-size:10px;color:#666;margin-top:6px">Pulls poster, synopsis, director &amp; cast once and caches them. Hover any film (in Available Films) to see the card \u2014 works offline during the draft.</div>'
+    +'</div>';
 }
 function nextPoolId(){ return aPool.reduce((m,f)=>Math.max(m,f.id),0)+1; }
 function addPoolFilm(){
@@ -1619,6 +1727,7 @@ function show(id,btn){
 
 // INIT
 loadAuction();
+loadTmdb();
 applyQuarterLabel();
 document.getElementById('bid-amount').value=minNext();
 (function(){
